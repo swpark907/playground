@@ -24,8 +24,9 @@
 .slider-container {
     position: relative;
     display: inline-block;
+    overflow: hidden; /* 슬라이더 아이템이 컨테이너를 벗어나지 않도록 함 */
     vertical-align: middle; /* prefix와 수직 정렬 */
-    width: 300px;
+    width: 400px;
 }
 
 /* 슬라이더 스타일 */
