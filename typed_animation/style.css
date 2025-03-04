@@ -2,7 +2,7 @@ body {
     background-color: #373544;
     color: #fff;
 }
-.container {
+.typed-container {
     display: flex;
     justify-content: center;
     align-items: center;
