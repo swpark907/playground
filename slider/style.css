@@ -1,0 +1,67 @@
+/**
+ * 텍스트 슬라이더 스타일 - 웹플로우 사용자를 위한 간편 설정
+ */
+
+/* 컨테이너 스타일 */
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* 필요에 따라 조정 가능 */
+    font-family: Arial, sans-serif;
+    font-size: 50px; /* 필요에 따라 조정 가능 */
+}
+
+/* 접두사 텍스트 스타일 */
+.prefix {
+    margin-right: 8px;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+}
+
+/* 슬라이더 컨테이너 스타일 */
+.slider-container {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle; /* prefix와 수직 정렬 */
+    width: 300px;
+}
+
+/* 슬라이더 스타일 */
+.slider {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* 슬라이더 아이템 기본 스타일 */
+.slider-item {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    text-align: center;
+    line-height: 1.5;
+    transform: translateY(100%);
+    color: #3498db;
+    font-weight: bold;
+    /* 스타일은 JavaScript에서 설정됩니다 */
+}
+
+/* 활성 슬라이더 아이템 스타일 */
+.slider-item.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 슬라이드 아웃 애니메이션 스타일 */
+.slider-item.slide-out {
+    opacity: 0;
+    transform: translateY(-100%);
+}
