@@ -1,0 +1,81 @@
+/* 기본 스타일 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #0a0a0a;
+  font-family: 'Noto Sans KR', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 명함 컨테이너 */
+.card {
+  position: relative;
+  width: 350px;
+  height: 200px;
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  padding: 25px;
+  color: white;
+  overflow: hidden;
+}
+
+/* 콘텐츠 스타일 */
+.content {
+  width: 100%;
+  z-index: 2;
+}
+
+/* 명함 내 요소들 */
+.card{
+  color: white;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  position: relative;
+  z-index: 2;
+  will-change: transform;
+  transition: transform 0.2s ease-out;
+  margin-bottom: 5px;
+}
+
+.card .content .content-top .job {
+  color: #ccc;
+  position: relative;
+  z-index: 2;
+  will-change: transform;
+}
+
+.card .content{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.card .content .content-bottom .contact {
+  color: #aaa;
+  position: relative;
+  z-index: 2;
+  will-change: transform;
+  text-align: end;
+}
+
+/* 캔버스는 절대적으로 명함 내부에 위치 */
+#bubble-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: 10px;
+} 

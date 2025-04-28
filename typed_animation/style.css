@@ -1,3 +1,8 @@
+*{
+    --typed-content-size: 4rem;
+    --typed-content-weight: 700;
+}
+
 body {
     background-color: #373544;
     color: #fff;
@@ -10,6 +15,12 @@ body {
 }
 
 .typed-content {
-    font-size: 4rem;
-    font-weight: 700;
+    font-size: var(--typed-content-size);
+    font-weight: var(--typed-content-weight);
+}
+
+.cursor{
+    width: 2px;
+    height: var(--typed-content-size);
+    background-color: white;
 }

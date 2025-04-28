@@ -1,0 +1,481 @@
+/* 글꼴 임포트 */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+/* 오디오 비주얼라이저 카드 기본 스타일 */
+.audio-visualizer-card {
+  position: relative;
+  width: 350px; /* 고정된 기본 크기 */
+  height: 220px; /* 고정된 기본 크기 */
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  background-color: #1a1a2e; /* 항상 어두운 배경색 유지 */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  box-sizing: border-box; /* 패딩을 포함한 크기 계산 */
+}
+
+/* 확대 모드 */
+.audio-visualizer-card.expanded {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  width: 90vw !important;
+  height: 80vh !important;
+  max-width: 1200px;
+  max-height: 800px;
+  z-index: 1000;
+  border-radius: 12px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  background-color: #1a1a2e; /* 확대 모드에서도 동일한 배경색 유지 */
+}
+
+/* 캔버스 컨테이너 - 중앙 정렬 및 잔상 방지 */
+.canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  pointer-events: none;
+  background-color: transparent;
+}
+
+/* 시각화 캔버스 - 비율 고정 및 중앙 정렬 */
+.visualizer-canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  backface-visibility: hidden;
+  will-change: transform;
+  transform: translateZ(0);
+  object-fit: contain; /* 항상 비율 유지 */
+  aspect-ratio: 1 / 1; /* 항상 정사각형 비율 유지 */
+}
+
+/* 오버레이 배경 */
+.overlay-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.overlay-backdrop.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 카드 오버레이 - 내용 담을 컨테이너 */
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  box-sizing: border-box;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* 카드 헤더 (회사 + 이름) */
+.card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.5rem;
+  pointer-events: auto;
+  max-width: 70%; /* 텍스트가 너무 길어지는 것 방지 */
+  background-color: rgba(10, 10, 20, 0.7);
+  border-radius: 4px;
+  backdrop-filter: blur(3px);
+}
+
+.card-header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.company-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 0.3rem 0;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.person-name {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0 0 0.2rem 0;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.position-title {
+  font-size: 0.9rem;
+  font-weight: 400;
+  font-style: italic;
+  margin: 0;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* 카드 푸터 (연락처) */
+.card-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 0.5rem;
+  pointer-events: auto;
+  max-width: 70%;
+  margin-left: auto; /* 오른쪽 정렬 */
+  background-color: rgba(10, 10, 20, 0.7);
+  border-radius: 4px;
+  backdrop-filter: blur(3px);
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 0.3rem 0;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.contact-info p {
+  margin: 0.1rem 0;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* 로고 */
+.card-logo {
+  width: 40px;
+  height: auto;
+  margin-bottom: 0.3rem;
+  object-fit: contain;
+}
+
+/* 컨트롤 패널 */
+.controls-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.8rem;
+  box-sizing: border-box;
+  z-index: 10;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: all 0.3s ease;
+  pointer-events: none;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+}
+
+.audio-visualizer-card:hover .controls-container,
+.audio-visualizer-card.expanded .controls-container {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* 시각화 컨트롤 패널 */
+.visualizer-control-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* 모드 버튼 */
+.visualizer-mode-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.3rem;
+}
+
+.visualizer-mode-buttons button {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.4rem 0.2rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.visualizer-mode-buttons button:hover,
+.visualizer-mode-buttons button.active {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 효과 컨트롤 */
+.effect-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.3rem;
+}
+
+.effect-controls button {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.4rem 0.2rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.effect-controls button:hover,
+.effect-controls button.active {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 재생 컨트롤 */
+.playback-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.3rem;
+}
+
+.playback-controls button {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.4rem 0.2rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.playback-controls button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.play-button {
+  background-color: rgba(0, 255, 0, 0.2) !important;
+}
+
+.play-button:hover {
+  background-color: rgba(0, 255, 0, 0.4) !important;
+}
+
+.pause-button {
+  background-color: rgba(255, 165, 0, 0.2) !important;
+}
+
+.pause-button:hover {
+  background-color: rgba(255, 165, 0, 0.4) !important;
+}
+
+.file-select-button {
+  background-color: rgba(0, 123, 255, 0.2) !important;
+}
+
+.file-select-button:hover {
+  background-color: rgba(0, 123, 255, 0.4) !important;
+}
+
+/* 볼륨 컨트롤 */
+.volume-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.volume-slider {
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  outline: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+}
+
+.volume-label {
+  color: #fff;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* 카드 액션 버튼 */
+.card-action-buttons {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 10;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.expand-button {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.expand-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.expand-icon,
+.collapse-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* 숨김 입력 */
+.hidden-input {
+  display: none;
+}
+
+/* 반응형 조정 - 작은 화면에서도 레이아웃 유지 */
+@media (max-width: 480px) {
+  .audio-visualizer-card {
+    width: 300px;
+    height: 180px;
+  }
+  
+  .audio-visualizer-card.expanded {
+    width: 90vw !important;
+    height: 80vh !important;
+  }
+  
+  .card-header, .card-footer {
+    max-width: 80%;
+  }
+  
+  .company-name {
+    font-size: 1rem;
+  }
+  
+  .person-name {
+    font-size: 0.9rem;
+  }
+  
+  .position-title {
+    font-size: 0.8rem;
+  }
+  
+  .contact-info p {
+    font-size: 0.75rem;
+  }
+  
+  .visualizer-mode-buttons,
+  .effect-controls,
+  .playback-controls {
+    flex-wrap: wrap;
+  }
+  
+  .visualizer-mode-buttons button,
+  .effect-controls button,
+  .playback-controls button {
+    padding: 0.3rem 0.2rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* 다크/라이트 모드는 외부 요소에만 적용 */
+.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.light-mode {
+  background-color: #f5f5f5;
+  color: #333333;
+}
+
+/* 프린트 스타일 */
+@media print {
+  .audio-visualizer-card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+  
+  .control-button,
+  .volume-control,
+  .overlay-backdrop {
+    display: none;
+  }
+} 

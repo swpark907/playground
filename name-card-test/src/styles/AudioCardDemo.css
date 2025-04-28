@@ -1,0 +1,242 @@
+.audio-card-demo {
+  padding: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s ease;
+  min-height: 100vh;
+}
+
+.audio-card-demo.dark {
+  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+  color: #fff;
+}
+
+.audio-card-demo.light {
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  color: #333;
+}
+
+.audio-card-demo h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 600;
+  font-size: 2.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  padding-top: 20px;
+}
+
+.demo-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.light .demo-controls {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.file-button, .style-button {
+  background: #2962ff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.5px;
+}
+
+.file-button:hover, .style-button:hover {
+  background: #1e88e5;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.light .file-button, .light .style-button {
+  background: #0066cc;
+}
+
+.light .file-button:hover, .light .style-button:hover {
+  background: #0056b3;
+}
+
+.visualizer-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  min-width: 350px;
+}
+
+.light .visualizer-selector {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.visualizer-selector p {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #4fc3f7;
+}
+
+.light .visualizer-selector p {
+  color: #0277bd;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  justify-content: center;
+}
+
+.button-group button {
+  background: rgba(50, 50, 70, 0.5);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  flex: 1;
+  max-width: 120px;
+  text-align: center;
+}
+
+.light .button-group button {
+  background: rgba(200, 200, 220, 0.5);
+  color: #333;
+}
+
+.button-group button.active {
+  background: rgba(50, 205, 50, 0.8);
+  box-shadow: 0 0 15px rgba(50, 205, 50, 0.7);
+}
+
+.light .button-group button.active {
+  background: rgba(30, 170, 30, 0.8);
+}
+
+.button-group button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  margin: 30px auto;
+  max-width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  transition: all 0.3s ease;
+}
+
+.card-container:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  transform: translateY(-5px);
+}
+
+.light .card-container {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.light .card-container:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.instructions {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 20px 30px;
+  margin-top: 40px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.light .instructions {
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.instructions h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #4fc3f7;
+  font-size: 1.4rem;
+  border-bottom: 1px solid rgba(79, 195, 247, 0.3);
+  padding-bottom: 8px;
+}
+
+.light .instructions h3 {
+  color: #0277bd;
+  border-bottom: 1px solid rgba(2, 119, 189, 0.3);
+}
+
+.instructions ul {
+  padding-left: 20px;
+  line-height: 1.6;
+}
+
+.instructions li {
+  margin-bottom: 10px;
+  font-size: 1.05rem;
+}
+
+.instructions strong {
+  color: #4fc3f7;
+}
+
+.light .instructions strong {
+  color: #0277bd;
+}
+
+@media (max-width: 768px) {
+  .audio-card-demo {
+    padding: 15px;
+  }
+  
+  .button-group {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .card-container {
+    padding: 15px;
+    max-width: 95%;
+  }
+  
+  .demo-controls {
+    padding: 15px;
+  }
+  
+  .visualizer-selector {
+    min-width: unset;
+    width: 100%;
+  }
+  
+  .button-group button {
+    max-width: unset;
+    flex: 1 1 40%;
+  }
+} 

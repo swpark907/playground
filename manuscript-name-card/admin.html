@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>원고지 명함 관리자</title>
+    <style>
+        body {
+            font-family: 'Nanum Gothic', sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 300px;
+            margin-bottom: 20px;
+            font-family: monospace;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .preview {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .instructions {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid #4CAF50;
+            margin-bottom: 20px;
+        }
+        .tab-container {
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            background-color: #f1f1f1;
+            border: none;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .tab.active {
+            background-color: #ddd;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>원고지 명함 내용 관리</h1>
+    
+    <div class="tab-container">
+        <button class="tab active" data-tab="simple">간편 모드</button>
+        <button class="tab" data-tab="advanced">고급 모드</button>
+    </div>
+    
+    <div id="simple-mode" class="tab-content active">
+        <div class="instructions">
+            <h3>간편 모드 사용 방법</h3>
+            <p>각 줄에 텍스트를 입력하세요. 각 줄은 최대 20자까지 입력할 수 있으며, 원고지 형식으로 표시됩니다.</p>
+            <p>줄 수는 자동으로 조정되며, 빈 줄은 공백으로 표시됩니다.</p>
+        </div>
+        
+        <textarea id="simpleContentArea" placeholder="여기에 각 줄의 내용을 입력하세요..." rows="10"></textarea>
+    </div>
+    
+    <div id="advanced-mode" class="tab-content">
+        <div class="instructions">
+            <h3>고급 모드 사용 방법</h3>
+            <p>JSON 형식으로 내용을 직접 편집할 수 있습니다. 각 문자를 개별적으로 제어하려면 이 모드를 사용하세요.</p>
+            <p>예: [["<", "자", "기", "소", "개", "서", ">"], ["홍", "길", "동", "입", "니", "다", "."]]</p>
+        </div>
+        
+        <textarea id="advancedContentArea" placeholder="여기에 JSON 형식의 내용을 입력하세요..."></textarea>
+    </div>
+    
+    <button id="applyBtn">적용하기</button>
+    <button id="viewBtn">명함 보기</button>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const simpleContentArea = document.getElementById('simpleContentArea');
+            const advancedContentArea = document.getElementById('advancedContentArea');
+            const applyBtn = document.getElementById('applyBtn');
+            const viewBtn = document.getElementById('viewBtn');
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            let activeMode = 'simple';
+            
+            // 기본 내용 로드
+            const defaultLines = [
+                "< 자기소개서 >                ",
+                "  홍길동입니다.              ",
+                "  한국대학교 컴퓨터공학과    ",
+                "  프로그래밍을 좋아합니다.    ",
+                "                            ",
+                "  hong@example.com         "
+            ];
+            
+            // 문자열 배열을 개별 문자 2차원 배열로 변환
+            function stringsToContentArray(lines) {
+                return lines.map(line => {
+                    const result = [];
+                    for (let i = 0; i < 20; i++) {
+                        result.push(i < line.length ? line[i] : '');
+                    }
+                    return result;
+                });
+            }
+            
+            // 내용 초기화
+            simpleContentArea.value = defaultLines.join('\n');
+            advancedContentArea.value = JSON.stringify(stringsToContentArray(defaultLines), null, 2);
+            
+            // 탭 전환 이벤트
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    activeMode = tab.dataset.tab;
+                    
+                    // 탭 상태 업데이트
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    // 컨텐츠 표시 업데이트
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    document.getElementById(`${activeMode}-mode`).classList.add('active');
+                    
+                    // 탭 전환 시 내용 동기화
+                    if (activeMode === 'simple') {
+                        try {
+                            const jsonContent = JSON.parse(advancedContentArea.value);
+                            const lines = jsonContent.map(row => row.join('').trim());
+                            simpleContentArea.value = lines.join('\n');
+                        } catch (e) {
+                            console.error('JSON 파싱 오류:', e);
+                        }
+                    } else {
+                        // 심플 모드에서 고급 모드로 전환
+                        const lines = simpleContentArea.value.split('\n');
+                        advancedContentArea.value = JSON.stringify(stringsToContentArray(lines), null, 2);
+                    }
+                });
+            });
+            
+            // 적용 버튼 이벤트
+            applyBtn.addEventListener('click', () => {
+                try {
+                    let content;
+                    
+                    if (activeMode === 'simple') {
+                        // 간편 모드: 텍스트 줄을 배열로 변환
+                        const lines = simpleContentArea.value.split('\n');
+                        content = stringsToContentArray(lines);
+                    } else {
+                        // 고급 모드: JSON 파싱
+                        content = JSON.parse(advancedContentArea.value);
+                    }
+                    
+                    localStorage.setItem('manuscriptContent', JSON.stringify(content));
+                    alert('내용이 저장되었습니다. "명함 보기"를 클릭하여 확인하세요.');
+                } catch (e) {
+                    alert('내용 형식이 올바르지 않습니다: ' + e.message);
+                }
+            });
+            
+            // 명함 보기 버튼 이벤트
+            viewBtn.addEventListener('click', () => {
+                window.open('index.html', '_blank');
+            });
+        });
+    </script>
+</body>
+</html> 

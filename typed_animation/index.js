@@ -3,15 +3,13 @@
 // Typed Animation Settings
 const TYPED_ANIMATION_CONFIG = {
   // 여기에서 설정을 변경하세요
-  texts: ["안녕하세요", "저는 프론트엔드 개발자입니다", "만나서 반가워요"], // 표시할 텍스트 목록
+  texts: ["안녕하세요", "뫙뭉 블로그입니다", "환영합니다"], // 표시할 텍스트 목록
   typingSpeed: 100,         // 타이핑 속도 (ms)
   deleteSpeed: 100,         // 삭제 속도 (ms)
   delayAfterTyping: 1000,   // 타이핑 후 대기 시간 (ms)
   delayAfterDelete: 500,    // 삭제 후 대기 시간 (ms)
   cursorSettings: {
-    width: "2px",           // 커서 너비
-    height: "4rem",         // 커서 높이
-    color: "white",         // 커서 색상
+    cursorOn: true,
     blinkSpeed: 500         // 커서 깜빡임 속도 (ms)
   }
 };
@@ -31,7 +29,6 @@ function initTypedAnimation() {
 
   let index = 0;
   let contentCount = 0;
-  let state = "type";
   let timeoutId = null;
 
   // 타이핑될 텍스트를 표시할 요소 생성
@@ -39,14 +36,7 @@ function initTypedAnimation() {
   typedContent.className = "typed-content";
   container.appendChild(typedContent);
 
-  // 커서 요소 생성
-  const cursor = document.createElement("div");
-  cursor.className = "cursor";
-  cursor.style.backgroundColor = TYPED_ANIMATION_CONFIG.cursorSettings.color;
-  cursor.style.width = TYPED_ANIMATION_CONFIG.cursorSettings.width;
-  cursor.style.height = TYPED_ANIMATION_CONFIG.cursorSettings.height;
-  container.appendChild(cursor);
-
+  
   function deleteText() {
     if (timeoutId){
       clearTimeout(timeoutId);
@@ -58,7 +48,6 @@ function initTypedAnimation() {
         index--;
         deleteText();
       } else {
-        state = "type";
         setTimeout(() => {
           typeText();
         }, TYPED_ANIMATION_CONFIG.delayAfterDelete);
@@ -76,7 +65,6 @@ function initTypedAnimation() {
         index++;
         typeText();
       } else {
-        state = "delete";
         setTimeout(() => {
           deleteText();
         }, TYPED_ANIMATION_CONFIG.delayAfterTyping);
@@ -89,10 +77,17 @@ function initTypedAnimation() {
     }, TYPED_ANIMATION_CONFIG.typingSpeed);
   }
 
-  // 커서 깜빡임 설정
-  setInterval(() => {
-    cursor.style.opacity = cursor.style.opacity === "0" ? "1" : "0";
-  }, TYPED_ANIMATION_CONFIG.cursorSettings.blinkSpeed);
+  // 커서 요소 생성 및 깜빡임 애니메이션 설정
+
+  if (TYPED_ANIMATION_CONFIG.cursorSettings.cursorOn) {
+    const cursor = document.createElement("div");
+    cursor.className = "cursor";
+    container.appendChild(cursor);
+
+    setInterval(() => {
+      cursor.style.opacity = cursor.style.opacity === "0" ? "1" : "0";  
+    }, TYPED_ANIMATION_CONFIG.cursorSettings.blinkSpeed);
+  }
 
   // 애니메이션 시작
   typeText();

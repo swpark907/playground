@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>거품 효과 명함</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="card">
+      <canvas id="bubble-canvas"></canvas>
+      <div class="content">
+        <div class="content-top">
+          <p>홍길동</p>
+          <p class="job">소프트웨어 엔지니어</p>
+        </div>
+        <div class="content-bottom">
+          <p class="contact">hong@example.com</p>
+          <p class="contact">010-1234-5678</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 디버깅 메시지 -->
+    <div
+      id="debug"
+      style="
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        color: #999;
+        font-size: 12px;
+        z-index: 9999;
+      "
+    ></div>
+
+    <script>
+      // 캔버스가 초기화되기 전 디버깅 정보
+      window.addEventListener("DOMContentLoaded", () => {
+        const debug = document.getElementById("debug");
+        const canvas = document.getElementById("bubble-canvas");
+        if (debug) {
+          debug.innerHTML = `Canvas found: ${canvas !== null}, Size: ${
+            canvas.width
+          }x${canvas.height}`;
+        }
+      });
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>
