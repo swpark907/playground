@@ -5,12 +5,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 기본 텍스트 내용 정의 (문자열로)
     const defaultLines = [
-        "< 자기소개서 >                ",
-        "  홍길동입니다.              ",
-        "  한국대학교 컴퓨터공학과    ",
-        "  프로그래밍을 좋아합니다.    ",
+        "  한국 소프트웨어                ",
+        "  홍길동              ",
+        "  한국대학교 소프트웨어 공학부    ",
+        "  기술 총괄    ",
         "                            ",
-        "  hong@example.com         "
+        "  hong@example.com         ",
+        "  한국 서울특별시 용산구         "
     ];
     
     // 문자열을 개별 문자 배열로 변환하는 함수
