@@ -1,0 +1,445 @@
+/* 기본 스타일 리셋 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #222;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #eee;
+  position: relative;
+}
+
+/* 노이즈 배경 효과 */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+/* CD 플레이어 컨테이너 */
+.cd-player {
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  width: 350px;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 
+    0 10px 20px rgba(0, 0, 0, 0.5),
+    0 6px 6px rgba(0, 0, 0, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+/* 플레이어 상단 섹션 */
+.player-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* CD 디스크 스타일 */
+.cd-container {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin-bottom: 20px;
+  perspective: 1000px;
+}
+
+.cd-disc {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #333, #111);
+  position: relative;
+  box-shadow: 
+    0 5px 15px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 15px rgba(150, 150, 150, 0.1),
+    inset 0 0 0 30px rgba(50, 50, 50, 0.3),
+    inset 0 0 0 45px rgba(150, 150, 150, 0.1),
+    inset 0 0 0 60px rgba(50, 50, 50, 0.3);
+  transition: transform 0.5s ease;
+  transform-style: preserve-3d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* CD 삽입 애니메이션 초기 상태 */
+  transform: translateY(-250px);
+  opacity: 0;
+  transition: transform 1.2s ease-in-out, opacity 0.8s ease-in-out;
+}
+
+/* CD 삽입 완료 상태 */
+.cd-inserted {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* CD 회전 애니메이션 */
+.cd-rotating {
+  animation: spin 2s linear infinite;
+}
+
+/* CD 이미지 */
+.cd-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+@keyframes spin {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+.cd-inner {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #666, #333);
+  position: relative;
+  z-index: 2;
+}
+
+.cd-inner::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #999;
+  box-shadow: inset 0 0 3px #000;
+}
+
+.cd-reflection {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%, transparent 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* LED 디스플레이 */
+.display-container {
+  width: 90%;
+  margin-top: 20px;
+}
+
+.led-display {
+  background-color: #000;
+  border: 3px solid #444;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-family: 'Press Start 2P', cursive;
+  color: #0f0;
+  font-size: 0.8rem;
+  text-align: center;
+  box-shadow: 
+    inset 0 0 10px rgba(0, 255, 0, 0.3),
+    0 0 5px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+  overflow: hidden;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* 글리치 효과 */
+#track-info {
+  position: relative;
+  animation: textGlitch 5s infinite;
+}
+
+#track-info::before,
+#track-info::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+#track-info::before {
+  /* 빨간색 그림자 */
+  color: rgba(255, 0, 0, 0.7);
+  animation: glitchText1 2.5s infinite;
+}
+
+#track-info::after {
+  /* 파란색 그림자 */
+  color: rgba(0, 0, 255, 0.7);
+  animation: glitchText2 3.5s infinite;
+}
+
+/* EQ 바 애니메이션 */
+.eq-visualizer {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  height: 20px;
+  margin-bottom: 10px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.eq-visualizer.active {
+  opacity: 1;
+}
+
+.eq-bar {
+  width: 4px;
+  background: linear-gradient(to top, #0f0, #090);
+  border-radius: 2px;
+  box-shadow: 0 0 5px rgba(0, 255, 0, 0.7);
+}
+
+.eq-bar:nth-child(1) {
+  animation: eq1 0.8s infinite ease-in-out alternate;
+  height: 20%;
+}
+
+.eq-bar:nth-child(2) {
+  animation: eq2 0.5s infinite ease-in-out alternate;
+  height: 60%;
+}
+
+.eq-bar:nth-child(3) {
+  animation: eq3 1.2s infinite ease-in-out alternate;
+  height: 40%;
+}
+
+@keyframes eq1 {
+  0% { height: 20%; }
+  100% { height: 90%; }
+}
+
+@keyframes eq2 {
+  0% { height: 60%; }
+  100% { height: 30%; }
+}
+
+@keyframes eq3 {
+  0% { height: 40%; }
+  100% { height: 80%; }
+}
+
+@keyframes textGlitch {
+  0% { 
+    transform: translateX(0); 
+    opacity: 1;
+  }
+  0.5% { 
+    transform: translateX(-2px); 
+    opacity: 0.8;
+  }
+  1% { 
+    transform: translateX(2px); 
+    opacity: 1;
+  }
+  1.5% { 
+    transform: translateX(0); 
+    opacity: 0.9;
+  }
+  2% { 
+    transform: translateX(-1px); 
+    opacity: 1;
+  }
+  2.5% { 
+    transform: translateX(0); 
+    opacity: 1;
+  }
+  20% { transform: translateX(0); }
+  20.1% { transform: translateX(1px); }
+  20.2% { transform: translateX(-1px); }
+  20.3% { transform: translateX(0); }
+  30% { opacity: 1; }
+  30.1% { opacity: 0.8; }
+  30.2% { opacity: 1; }
+  70% { transform: translateX(0); }
+  70.1% { transform: translateX(-1px); }
+  70.2% { transform: translateX(1px); }
+  70.3% { transform: translateX(0); }
+  100% { opacity: 1; }
+}
+
+@keyframes glitchText1 {
+  0% { transform: translateX(0); opacity: 0; }
+  1% { transform: translateX(-2px); opacity: 0.1; }
+  2% { transform: translateX(2px); opacity: 0; }
+  3% { transform: translateX(0); opacity: 0.1; }
+  4% { transform: translateX(0); opacity: 0; }
+  50% { transform: translateX(0); opacity: 0; }
+  51% { transform: translateX(2px); opacity: 0.1; }
+  52% { transform: translateX(-2px); opacity: 0; }
+  53% { transform: translateX(0); opacity: 0.1; }
+  54% { transform: translateX(0); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes glitchText2 {
+  0% { transform: translateX(0); opacity: 0; }
+  2% { transform: translateX(2px); opacity: 0.1; }
+  4% { transform: translateX(-2px); opacity: 0; }
+  6% { transform: translateX(0); opacity: 0.1; }
+  8% { transform: translateX(0); opacity: 0; }
+  60% { transform: translateX(0); opacity: 0; }
+  62% { transform: translateX(-2px); opacity: 0.1; }
+  64% { transform: translateX(2px); opacity: 0; }
+  66% { transform: translateX(0); opacity: 0.1; }
+  68% { transform: translateX(0); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* 트랙 내용 */
+.track-content {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+  padding: 15px;
+  min-height: 200px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: opacity 0.3s ease;
+}
+
+.track-content h2, .track-content h3 {
+  margin-bottom: 10px;
+  color: #ddd;
+}
+
+.track-content p {
+  margin-bottom: 8px;
+}
+
+.track-content ul {
+  margin-left: 18px;
+  margin-bottom: 8px;
+}
+
+.track-content li {
+  margin-bottom: 5px;
+}
+
+/* 컨트롤 버튼 */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.control-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #2e2e2e, #252525);
+  border: none;
+  cursor: pointer;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 3px 5px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  color: #ddd;
+  transition: all 0.1s ease;
+}
+
+.control-btn:active {
+  transform: translateY(2px);
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.control-btn span {
+  display: block;
+  transform: scale(1.2);
+}
+
+/* 숨김 상태 */
+.hidden {
+  display: none;
+}
+
+/* 브랜드 로고 */
+.player-brand {
+  text-align: center;
+  font-size: 0.7rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 5px;
+}
+
+/* 애니메이션 */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease forwards;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 400px) {
+  .cd-player {
+    width: 90%;
+    padding: 15px;
+  }
+  
+  .cd-container {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .control-btn {
+    width: 45px;
+    height: 45px;
+  }
+}

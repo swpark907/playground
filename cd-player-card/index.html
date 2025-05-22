@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CD 플레이어 명함</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="cd-player">
+      <div class="player-top">
+        <div class="cd-container">
+          <div class="cd-disc">
+            <img src="assets/cd.svg" alt="CD" class="cd-image">
+            <div class="cd-inner"></div>
+          </div>
+          <div class="cd-reflection"></div>
+        </div>
+        
+        <div class="display-container">
+          <div class="led-display">
+            <p id="track-info">INSERT CD</p>
+          </div>
+          
+          <div class="eq-visualizer">
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
+          </div>
+          
+          <div class="track-content" id="track-content">
+            <!-- 트랙 내용은 JavaScript에서 동적으로 변경됩니다 -->
+          </div>
+        </div>
+      </div>
+      
+      <div class="controls">
+        <button id="prev-btn" class="control-btn">
+          <span>⏮️</span>
+        </button>
+        <button id="play-btn" class="control-btn">
+          <span>▶️</span>
+        </button>
+        <button id="pause-btn" class="control-btn">
+          <span>⏸️</span>
+        </button>
+        <button id="eject-btn" class="control-btn hidden">
+          <span>⏏️</span>
+        </button>
+      </div>
+      
+      <div class="player-brand">
+        <h3>RETRO PLAYER</h3>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
