@@ -1,0 +1,345 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #b3b3b3;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  width: 700px;
+  height: 400px;
+  background-color: #2e2e2e;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 필름 그레인 효과 */
+.grain-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('assets/grain-texture.png');
+  opacity: 0.15;
+  mix-blend-mode: overlay;
+  z-index: 10;
+  pointer-events: none;
+  background-color: transparent;
+}
+
+/* 시작 화면 스타일 */
+.start-screen {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #1a1a1a;
+  color: #fff;
+  position: relative;
+  z-index: 5;
+}
+
+.viewfinder {
+  width: 250px;
+  height: 150px;
+  background-color: transparent;
+  border: 3px solid #ddd;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.viewfinder-frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  border: 1px solid #fff;
+  background-color: transparent;
+}
+
+.play-btn {
+  padding: 12px 24px;
+  background-color: rgba(204, 158, 90, 0.8);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+  font-family: 'Black Han Sans', sans-serif;
+  font-weight: normal;
+}
+
+.play-btn:hover {
+  background-color: rgba(204, 158, 90, 1);
+  transform: scale(1.05);
+}
+
+/* 필름 슬라이더 스타일 */
+.film-slider {
+  width: 100%;
+  height: 100%;
+  background-color: #1a1a1a;
+  position: relative;
+  z-index: 5;
+}
+
+.film-container {
+  width: 100%;
+  height: calc(100% - 50px);
+  position: relative;
+}
+
+/* 셔터 효과 애니메이션 */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.film-frame {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #2e2e2e;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.film-frame.active {
+  opacity: 1;
+}
+
+.film-frame.hidden {
+  opacity: 0;
+}
+
+.frame-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(100%) brightness(0.7);
+  background-color: transparent;
+  z-index: 1;
+}
+
+.bg-video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) brightness(0.7);
+  background-color: transparent;
+}
+
+.frame-content {
+  position: relative;
+  z-index: 2;
+  color: #e6c994; /* 필름 감성에 어울리는 골드/세피아 색상 */
+  text-align: center;
+  padding: 20px;
+  background-color: transparent; /* 배경을 투명하게 변경 */
+  border-radius: 5px;
+  width: 80%;
+  max-width: 500px;
+}
+
+.frame-content h2 {
+  margin-bottom: 15px;
+  font-size: 2.2rem;
+  font-family: 'Black Han Sans', sans-serif;
+  letter-spacing: 1px;
+  background-color: transparent;
+  color: #f0c05a; /* 제목에 더 밝은 황금색 사용 */
+  font-weight: normal;
+}
+
+.frame-content p {
+  font-size: 1.3rem;
+  line-height: 1.5;
+  background-color: transparent;
+  font-family: 'Black Han Sans', sans-serif;
+  color: #d6b88e; /* 내용에 약간 더 밝은 세피아 톤 사용 */
+  font-weight: normal;
+}
+
+.controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1a1a1a;
+  border-top: 2px solid #333;
+}
+
+.control-btn {
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0 20px;
+  transition: all 0.3s ease;
+  font-family: 'Black Han Sans', sans-serif;
+  font-weight: normal;
+}
+
+.control-btn:hover {
+  color: #cc9e5a;
+}
+
+/* 필름 카운터 효과 */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.film-counter {
+  font-family: 'Courier New', monospace; /* monospace 폰트 사용 */
+  font-weight: bold;
+  color: #cc9e5a;
+  margin: 0 20px;
+  background-color: transparent;
+  padding: 3px 8px;
+  border: 1px solid #666;
+  border-radius: 3px;
+  animation: blink 1.5s infinite;
+  letter-spacing: 2px;
+}
+
+/* 필름 프레임 효과 - 상하로 변경 */
+.film-frame::before,
+.film-frame::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 25px;
+  background-color: #000;
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent,
+    transparent 15px,
+    rgba(255, 255, 255, 0.2) 15px,
+    rgba(255, 255, 255, 0.2) 30px
+  );
+  z-index: 3;
+}
+
+.film-frame::before {
+  top: 0;
+}
+
+.film-frame::after {
+  bottom: 0;
+}
+
+/* 커튼 효과 */
+.curtain-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  z-index: 20;
+  background-color: transparent;
+}
+
+.curtain {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  background-color: #000;
+  transition: transform 1.5s ease-in-out;
+  z-index: 21;
+}
+
+.curtain.left {
+  left: 0;
+  transform: translateX(-100%);
+}
+
+.curtain.right {
+  right: 0;
+  transform: translateX(100%);
+}
+
+.curtain-container.active .curtain.left {
+  transform: translateX(0);
+}
+
+.curtain-container.active .curtain.right {
+  transform: translateX(0);
+}
+
+.curtain-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 22;
+  background-color: transparent;
+  opacity: 0;
+  transition: opacity 0.5s ease 1.5s;
+}
+
+.curtain-container.active .curtain-content {
+  opacity: 1;
+}
+
+.curtain-btn {
+  padding: 12px 24px;
+  background-color: rgba(204, 158, 90, 0.8);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: all 0.3s ease;
+  font-family: 'Black Han Sans', sans-serif;
+  background-color: rgba(204, 158, 90, 0.8);
+}
+
+.curtain-btn:hover {
+  background-color: rgba(204, 158, 90, 1);
+  transform: scale(1.05);
+}

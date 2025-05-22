@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>감성 필름 명함</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <!-- 필름 그레인 효과 -->
+        <div class="grain-overlay"></div>
+        
+        <!-- 시작 화면 -->
+        <div class="start-screen" id="startScreen">
+          <div class="viewfinder">
+            <div class="viewfinder-frame"></div>
+          </div>
+          <button class="play-btn" id="playBtn">Play My Film</button>
+        </div>
+        
+        <!-- 필름 슬라이더 -->
+        <div class="film-slider" id="filmSlider">
+          <div class="film-container" id="filmContainer">
+            <!-- 필름 프레임들은 JavaScript로 동적 추가됨 -->
+          </div>
+          <div class="controls">
+            <button class="control-btn prev" id="prevBtn">&lt;</button>
+            <div class="film-counter" id="filmCounter">1/4</div>
+            <button class="control-btn next" id="nextBtn">&gt;</button>
+          </div>
+        </div>
+        
+        <!-- 커튼 효과 -->
+        <div class="curtain-container" id="curtainContainer">
+          <div class="curtain left"></div>
+          <div class="curtain right"></div>
+          <div class="curtain-content">
+            <button class="curtain-btn" id="replayBtn">다시 보기</button>
+            <button class="curtain-btn" id="homeBtn">처음으로</button>
+          </div>
+        </div>
+        
+        <!-- 오디오 요소 -->
+        <audio id="bgMusic" loop>
+          <source src="assets/background-music.mp3" type="audio/mp3">
+        </audio>
+        
+        <!-- 셔터 사운드 -->
+        <audio id="shutterSound">
+          <source src="assets/shutter-sound.mp3" type="audio/mp3">
+        </audio>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
