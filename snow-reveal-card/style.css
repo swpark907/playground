@@ -1,0 +1,377 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.card-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.business-card {
+    position: relative;
+    width: 890px;
+    height: 510px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    background: #f8f9fa;
+}
+
+.hidden-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 1;
+}
+
+.name {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 2px;
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    letter-spacing: 1px;
+}
+
+.slogan {
+    font-size: 1.2rem;
+    font-style: italic;
+    margin-bottom: 40px;
+    opacity: 0.8;
+    max-width: 400px;
+    line-height: 1.5;
+}
+
+.contact {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.email, .phone, .website {
+    padding: 5px 0;
+    transition: all 0.3s ease;
+}
+
+.email:hover, .phone:hover, .website:hover {
+    transform: scale(1.05);
+    opacity: 1;
+}
+
+.decorative-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.circle {
+    position: absolute;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+}
+
+.circle-1 {
+    width: 200px;
+    height: 200px;
+    top: -50px;
+    right: -50px;
+    animation: float 6s ease-in-out infinite;
+}
+
+.circle-2 {
+    width: 150px;
+    height: 150px;
+    bottom: -30px;
+    left: -30px;
+    animation: float 8s ease-in-out infinite reverse;
+}
+
+.line {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    transform-origin: center;
+}
+
+.line-1 {
+    width: 300px;
+    height: 2px;
+    top: 20%;
+    left: -100px;
+    transform: rotate(45deg);
+    animation: slide 10s linear infinite;
+}
+
+.line-2 {
+    width: 250px;
+    height: 2px;
+    bottom: 30%;
+    right: -80px;
+    transform: rotate(-30deg);
+    animation: slide 12s linear infinite reverse;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+@keyframes slide {
+    0% { transform: translateX(-100px) rotate(45deg); }
+    100% { transform: translateX(100px) rotate(45deg); }
+}
+
+/* 모바일 대응 */
+@media (max-width: 920px) {
+    .business-card {
+        width: 90vw;
+        height: calc(90vw * 510 / 890);
+        max-width: 890px;
+        max-height: 510px;
+    }
+    
+    #snowCanvas {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .name {
+        font-size: 3rem;
+    }
+    
+    .title {
+        font-size: 1.4rem;
+    }
+    
+    .slogan {
+        font-size: 1rem;
+    }
+    
+    .contact {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .name {
+        font-size: 2.5rem;
+    }
+    
+    .title {
+        font-size: 1.2rem;
+    }
+    
+    .slogan {
+        font-size: 0.9rem;
+        margin-bottom: 30px;
+    }
+    
+    .contact {
+        font-size: 0.8rem;
+    }
+}
+
+/* 눈송이 컨테이너 */
+.snowflakes-container {
+    position: absolute;
+    top: -100px; /* 명함 위쪽으로 확장 */
+    left: 0;
+    width: 100%;
+    height: calc(100% + 200px); /* 위아래로 확장 */
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible; /* 바깥 영역도 보이도록 */
+    border-radius: 20px;
+}
+
+/* 개별 눈송이 */
+.snowflake {
+    position: absolute;
+    color: white;
+    font-size: 1em;
+    animation-name: snowfall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    opacity: 0.8;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 눈송이 떨어지는 애니메이션 */
+@keyframes snowfall {
+    0% {
+        transform: translateY(-150px) rotate(0deg);
+        opacity: 0;
+    }
+    5% {
+        opacity: 0.8;
+    }
+    95% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(660px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* 다양한 눈송이 크기와 속도 */
+.snowflake.size-1 { font-size: 0.8em; animation-duration: 8s; }
+.snowflake.size-2 { font-size: 1.0em; animation-duration: 10s; }
+.snowflake.size-3 { font-size: 1.2em; animation-duration: 12s; }
+.snowflake.size-4 { font-size: 1.4em; animation-duration: 14s; }
+
+/* 다양한 좌우 움직임 */
+.snowflake.drift-1 {
+    animation-name: snowfall-drift-1;
+}
+.snowflake.drift-2 {
+    animation-name: snowfall-drift-2;
+}
+.snowflake.drift-3 {
+    animation-name: snowfall-drift-3;
+}
+
+@keyframes snowfall-drift-1 {
+    0% {
+        transform: translateY(-150px) translateX(0px) rotate(0deg);
+        opacity: 0;
+    }
+    5% {
+        opacity: 0.8;
+    }
+    25% {
+        transform: translateY(150px) translateX(20px) rotate(90deg);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(300px) translateX(-10px) rotate(180deg);
+        opacity: 0.8;
+    }
+    75% {
+        transform: translateY(450px) translateX(15px) rotate(270deg);
+        opacity: 0.8;
+    }
+    95% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(660px) translateX(0px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes snowfall-drift-2 {
+    0% {
+        transform: translateY(-150px) translateX(0px) rotate(0deg);
+        opacity: 0;
+    }
+    5% {
+        opacity: 0.8;
+    }
+    25% {
+        transform: translateY(150px) translateX(-15px) rotate(90deg);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(300px) translateX(25px) rotate(180deg);
+        opacity: 0.8;
+    }
+    75% {
+        transform: translateY(450px) translateX(-20px) rotate(270deg);
+        opacity: 0.8;
+    }
+    95% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(660px) translateX(0px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes snowfall-drift-3 {
+    0% {
+        transform: translateY(-150px) translateX(0px) rotate(0deg);
+        opacity: 0;
+    }
+    5% {
+        opacity: 0.8;
+    }
+    33% {
+        transform: translateY(200px) translateX(30px) rotate(120deg);
+        opacity: 0.8;
+    }
+    66% {
+        transform: translateY(400px) translateX(-25px) rotate(240deg);
+        opacity: 0.8;
+    }
+    95% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(660px) translateX(10px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+#snowCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    cursor: none;
+    border-radius: 20px;
+}
+
+.instruction {
+    color: white;
+    font-size: 1.1rem;
+    text-align: center;
+    opacity: 0.8;
+    animation: pulse 2s ease-in-out infinite;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+} 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snow Reveal Card - Jinwoo Lee</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="card-container">
+        <div class="business-card">
+            <!-- 숨겨진 정보 레이어 -->
+            <div class="hidden-content">
+                <div class="name">Jinwoo Lee</div>
+                <div class="title">Creative Frontend Developer</div>
+                <div class="contact">
+                    <div class="email">jinwoo@example.com</div>
+                    <div class="phone">+82 10-1234-5678</div>
+                    <div class="website">www.jinwoo-dev.com</div>
+                </div>
+                <div class="decorative-elements">
+                    <div class="circle circle-1"></div>
+                    <div class="circle circle-2"></div>
+                    <div class="line line-1"></div>
+                    <div class="line line-2"></div>
+                </div>
+            </div>
+            
+            <!-- 눈송이 컨테이너 (캔버스 아래) -->
+            <div class="snowflakes-container"></div>
+            
+            <!-- 눈 덮개 레이어 -->
+            <canvas id="snowCanvas" width="890" height="510"></canvas>
+        </div>
+        
+        <div class="instruction">
+            마우스로 눈을 치워보세요...
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
