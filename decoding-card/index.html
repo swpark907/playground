@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seungwoo Park - Interactive Card</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 인트로 화면 -->
+    <section id="intro-screen" class="screen active">
+        <div class="intro-content">
+            <div class="corrupted-name">-- S3??@G_??O --</div>
+            <div class="glitch-subtitle">Identity Signal Corrupted</div>
+            <button id="start-decode-btn" class="decode-button">Start Decoding</button>
+        </div>
+    </section>
+
+    <!-- 디코딩 애니메이션 화면 -->
+    <section id="decoding-screen" class="screen">
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="terminal-title">Identity Recovery Console</div>
+            </div>
+            <div class="terminal-body">
+                <div id="decoding-text" class="decoding-text"></div>
+                <div class="cursor-blink">|</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 최종 명함 화면 -->
+    <section id="final-card" class="screen">
+        <div class="card-container">
+            <div class="business-card">
+                <div class="card-header">
+                    <div class="name">Hong Gildong</div>
+                    <div class="title">Frontend Developer</div>
+                    <div class="location">📍 Seoul, South Korea</div>
+                </div>
+                
+                <div class="card-body">
+                    <div class="description">Creative Engineer with a Visual Soul</div>
+                    
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="label">Experience</span>
+                            <span class="value">5+ Years</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Focus</span>
+                            <span class="value">UI/UX Development</span>
+                        </div>
+                    </div>
+
+                    <div class="skills">
+                        <div class="skills-title">Tech Stack</div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">TypeScript</span>
+                            <span class="skill-tag">Next.js</span>
+                            <span class="skill-tag">CSS/SCSS</span>
+                            <span class="skill-tag">Node.js</span>
+                        </div>
+                    </div>
+
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-icon">✉️</span>
+                            <span class="contact-text">hong@developer.kr</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📱</span>
+                            <span class="contact-text">+82 10-1234-5678</span>
+                        </div>
+                    </div>
+                    
+                    <div class="status">
+                        <span class="status-indicator">●</span>
+                        <span>Identity Status: Restored</span>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="social-links">
+                        <a href="#" class="social-link github">
+                            <span class="social-icon">🐙</span>
+                            <span>GitHub</span>
+                        </a>
+                        <a href="#" class="social-link linkedin">
+                            <span class="social-icon">💼</span>
+                            <span>LinkedIn</span>
+                        </a>
+                        <a href="#" class="social-link portfolio">
+                            <span class="social-icon">🌐</span>
+                            <span>Portfolio</span>
+                        </a>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="contact-btn">Send Message</button>
+                        <button class="download-btn">Download CV</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html> 
