@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snow Texture Card - Jinwoo Lee</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="card" id="snowCard">
+        <div class="snow-background"></div>
+        <div class="content">
+            <div class="name">Jinwoo Lee</div>
+            <div class="title">Frontend Developer</div>
+            <div class="contact">
+                <div class="email">jinwoo.dev@snow.com</div>
+                <div class="phone">+82 10-1234-5678</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const card = document.getElementById('snowCard');
+            let mouseTrail = []; // 마우스 궤적 저장
+            let lastFootprintTime = 0;
+            let isMouseInCard = false;
+            
+            // 눈송이 생성 함수
+            function createSnowflakes() {
+                const snowflakeCount = 20; // 눈송이 개수
+                
+                for (let i = 0; i < snowflakeCount; i++) {
+                    const snowflake = document.createElement('div');
+                    snowflake.className = 'snowflake';
+                    
+                    // 랜덤 크기 클래스 추가
+                    const sizes = ['small', 'medium', '', 'large'];
+                    const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
+                    if (randomSize) snowflake.classList.add(randomSize);
+                    
+                    // 랜덤 위치 설정
+                    const x = Math.random() * 100;
+                    const y = Math.random() * 100;
+                    snowflake.style.left = x + '%';
+                    snowflake.style.top = y + '%';
+                    
+                    // 랜덤 애니메이션 딜레이
+                    snowflake.style.animationDelay = Math.random() * 8 + 's';
+                    
+                    // 랜덤 투명도
+                    snowflake.style.opacity = 0.4 + Math.random() * 0.6;
+                    
+                    card.appendChild(snowflake);
+                }
+            }
+            
+            // 페이지 로드 시 눈송이 생성
+            createSnowflakes();
+            
+            // 마우스 움직임 추적
+            card.addEventListener('mousemove', function(e) {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const currentTime = Date.now();
+                
+                // 마우스 궤적에 현재 위치 추가
+                mouseTrail.push({
+                    x: x,
+                    y: y,
+                    time: currentTime
+                });
+                
+                // 3초 이상 된 궤적은 제거 (메모리 절약)
+                mouseTrail = mouseTrail.filter(point => currentTime - point.time < 3000);
+                
+                if (currentTime - lastFootprintTime > 250 && mouseTrail.length > 1) {
+                    createDelayedFootprint();
+                    lastFootprintTime = currentTime;
+                }
+            });
+            
+            // 마우스가 카드에 들어올 때
+            card.addEventListener('mouseenter', function() {
+                isMouseInCard = true;
+                mouseTrail = []; // 궤적 초기화
+            });
+            
+            // 마우스가 카드에서 나갈 때
+            card.addEventListener('mouseleave', function() {
+                isMouseInCard = false;
+                // 마지막 몇 개 발자국을 더 생성 (걸어나가는 효과)
+                setTimeout(() => {
+                    if (mouseTrail.length > 0) {
+                        createDelayedFootprint();
+                    }
+                }, 500);
+                setTimeout(() => {
+                    if (mouseTrail.length > 0) {
+                        createDelayedFootprint();
+                    }
+                }, 1000);
+            });
+            
+            function createDelayedFootprint() {
+                if (mouseTrail.length < 2) return;
+                
+                // 0-0.5초 전 위치를 찾기 (딜레이 효과)
+                const currentTime = Date.now();
+                const delayTime = Math.random() * 300; // 0-0.5초 딜레이
+                const targetTime = currentTime - delayTime;
+                
+                // 가장 가까운 시간의 위치 찾기
+                let targetPoint = mouseTrail[0];
+                for (let i = 0; i < mouseTrail.length; i++) {
+                    if (Math.abs(mouseTrail[i].time - targetTime) < Math.abs(targetPoint.time - targetTime)) {
+                        targetPoint = mouseTrail[i];
+                    }
+                }
+                
+                // 발자국 방향 계산 (발가락이 마우스 방향을 향하도록)
+                let rotation = 0;
+                if (mouseTrail.length > 0) {
+                    const currentMousePos = mouseTrail[mouseTrail.length - 1]; // 가장 최근 마우스 위치
+                    const dx = currentMousePos.x - targetPoint.x;
+                    const dy = currentMousePos.y - targetPoint.y;
+                    
+                    // 마우스 방향으로 발자국이 향하도록 계산
+                    rotation = Math.atan2(dy, dx) * (180 / Math.PI);
+                    
+                    // 발가락이 마우스를 향하도록 90도 추가 (기존에서 180도 회전)
+                    rotation += 90;
+                    
+                    // 약간의 랜덤 변화 추가 (자연스러운 걸음)
+                    rotation += (Math.random() - 0.5) * 20; // ±10도 랜덤
+                }
+                
+                createFootprint(targetPoint.x, targetPoint.y, rotation);
+            }
+            
+            function createFootprint(x, y, rotation = 0) {
+                // 발자국 요소 생성
+                const footprint = document.createElement('div');
+                footprint.className = 'footprint';
+                footprint.style.left = x + 'px';
+                footprint.style.top = y + 'px';
+                footprint.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
+                
+                // 카드에 발자국 추가
+                card.appendChild(footprint);
+                
+                // 나타나는 효과
+                setTimeout(() => {
+                    footprint.classList.add('visible');
+                }, 10);
+                
+                // 3초 후 사라지는 효과 시작
+                setTimeout(() => {
+                    footprint.classList.remove('visible');
+                    footprint.classList.add('fading');
+                }, 3000);
+                
+                // 완전히 사라진 후 요소 제거
+                setTimeout(() => {
+                    if (footprint.parentNode) {
+                        footprint.parentNode.removeChild(footprint);
+                    }
+                }, 4500);
+            }
+            
+            // 클릭 시 즉시 발자국 생성 (기존 기능 유지)
+            card.addEventListener('click', function(e) {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const rotation = Math.random() * 360; // 완전 랜덤 회전
+                
+                createFootprint(x, y, rotation);
+            });
+            
+            // 터치 이벤트도 지원 (모바일)
+            card.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                
+                const rect = card.getBoundingClientRect();
+                const touch = e.touches[0];
+                const x = touch.clientX - rect.left;
+                const y = touch.clientY - rect.top;
+                const rotation = Math.random() * 360;
+                
+                createFootprint(x, y, rotation);
+            });
+        });
+    </script>
+</body>
+</html> 
