@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VHS 타임라인 명함</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- VHS Header -->
+    <div class="vhs-header">
+        <div class="header-left">
+            <span class="play-indicator">PLAY ▷</span>
+            <span class="mode">SP</span>
+        </div>
+        <div class="header-center">
+            <span class="timer" id="timer">00:00:01</span>
+        </div>
+        <div class="header-right">
+            <span class="rec-indicator">● REC</span>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <!-- Scene 1: VHS 삽입 애니메이션 -->
+        <div class="scene" id="scene-1" data-time="1">
+            <div class="vhs-noise">
+                <div class="static"></div>
+                <div class="insertion-text">
+                    <p class="glitch-text">테이프 재생 중...</p>
+                    <div class="loading-bar">
+                        <div class="loading-progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 2: VHS 테이프 라벨 -->
+        <div class="scene" id="scene-2" data-time="5">
+            <div class="tape-label-scene">
+                <div class="vhs-tape-label">
+                    <div class="label-header">
+                        <span class="label-title">CREATIVE ARCHIVE</span>
+                        <span class="label-volume">Vol.2024</span>
+                    </div>
+                    <div class="label-line"></div>
+                    <div class="label-content">
+                        <div class="label-row">
+                            <span class="label-key">Recording:</span>
+                            <span class="label-value">영상감독의 작품집</span>
+                        </div>
+                        <div class="label-row">
+                            <span class="label-key">Duration:</span>
+                            <span class="label-value">∞ (무한대)</span>
+                        </div>
+                        <div class="label-row">
+                            <span class="label-key">Quality:</span>
+                            <span class="label-value">4K (Creative Vision)</span>
+                        </div>
+                        <div class="label-row">
+                            <span class="label-key">Genre:</span>
+                            <span class="label-value">Cinema & Storytelling</span>
+                        </div>
+                    </div>
+                    <div class="label-footer">
+                        <div class="rewind-icon">⏪</div>
+                        <div class="tape-holes">
+                            <div class="hole"></div>
+                            <div class="hole"></div>
+                        </div>
+                        <div class="fast-forward-icon">⏩</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 3: 이름과 직무 -->
+        <div class="scene" id="scene-3" data-time="10">
+            <div class="subtitle-scene">
+                <div class="subtitle-box">
+                    <h1 class="name">김영상</h1>
+                    <h2 class="title">Film Director & Video Editor</h2>
+                    <p class="description">시각적 스토리텔링으로 감동을 전합니다</p>
+                    <div class="tech-stack">
+                        <div class="tech-category">
+                            <span class="category-label">EDITING TOOLS</span>
+                            <div class="tech-items">
+                                <span class="tech-item">Final Cut Pro</span>
+                                <span class="tech-item">Premiere Pro</span>
+                                <span class="tech-item">DaVinci Resolve</span>
+                            </div>
+                        </div>
+                        <div class="tech-category">
+                            <span class="category-label">SPECIALTIES</span>
+                            <div class="tech-items">
+                                <span class="tech-item">Color Grading</span>
+                                <span class="tech-item">Motion Graphics</span>
+                                <span class="tech-item">Sound Design</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 4: 포트폴리오 -->
+        <div class="scene" id="scene-4" data-time="15">
+            <div class="portfolio-scene">
+                <h3 class="portfolio-title">FEATURED WORKS</h3>
+                <div class="portfolio-items">
+                    <div class="portfolio-item">
+                        <div class="project-info">
+                            <span class="project-name">• 단편영화 "기억의 조각들"</span>
+                            <span class="project-desc">아날로그 감성과 디지털 기술의 만남</span>
+                        </div>
+                        <div class="project-meta">
+                            <span class="project-tech">[Cinema 4D, After Effects]</span>
+                            <span class="project-impact">국제영화제 수상</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="project-info">
+                            <span class="project-name">• 브랜드 필름 시리즈</span>
+                            <span class="project-desc">레트로 VHS 감성의 상업 영상 제작</span>
+                        </div>
+                        <div class="project-meta">
+                            <span class="project-tech">[RED Camera, DaVinci]</span>
+                            <span class="project-impact">1M+ 조회수</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="project-info">
+                            <span class="project-name">• 뮤직비디오 "80년대로의 여행"</span>
+                            <span class="project-desc">빈티지 카메라로 촬영한 감성 뮤직비디오</span>
+                        </div>
+                        <div class="project-meta">
+                            <span class="project-tech">[16mm Film, Analog]</span>
+                            <span class="project-impact">MTV 후보작</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="project-info">
+                            <span class="project-name">• 다큐멘터리 "VHS의 귀환"</span>
+                            <span class="project-desc">아날로그 매체의 부활을 다룬 장편 다큐</span>
+                        </div>
+                        <div class="project-meta">
+                            <span class="project-tech">[Multi-format, Archive]</span>
+                            <span class="project-impact">제작 진행중</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scene 5: 연락처 카드 -->
+        <div class="scene" id="scene-5" data-time="18">
+            <div class="contact-scene">
+                <div class="business-card">
+                    <div class="card-header">
+                        <h2 class="card-name">김영상</h2>
+                        <p class="card-title">Film Director & Creative Storyteller</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="contact-item">
+                            <span class="contact-label">EMAIL</span>
+                            <span class="contact-value">director@filmstudio.kr</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">PORTFOLIO</span>
+                            <span class="contact-value">kimyoungsang.film</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">VIMEO</span>
+                            <span class="contact-value">vimeo.com/kimfilms</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">INSTAGRAM</span>
+                            <span class="contact-value">@kimfilmdirector</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">YOUTUBE</span>
+                            <span class="contact-value">youtube.com/c/kimcinema</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="availability">
+                            <span class="status-indicator">●</span>
+                            <span class="status-text">영상 프로젝트 상담 가능</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VHS Controls -->
+    <div class="vhs-controls">
+        <div class="control-buttons">
+            <button class="control-btn" id="rewind-btn">⏪ REW</button>
+            <button class="control-btn" id="play-btn">▶ PLAY</button>
+            <button class="control-btn" id="pause-btn">⏸ PAUSE</button>
+            <button class="control-btn" id="forward-btn">⏩ FF</button>
+        </div>
+        <div class="timeline">
+            <div class="timeline-bar">
+                <div class="timeline-progress" id="timeline-progress"></div>
+                <div class="timeline-markers">
+                    <div class="marker" data-time="1" style="left: 5%">1</div>
+                    <div class="marker" data-time="5" style="left: 25%">5</div>
+                    <div class="marker" data-time="10" style="left: 50%">10</div>
+                    <div class="marker" data-time="15" style="left: 75%">15</div>
+                    <div class="marker" data-time="18" style="left: 90%">18</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scanlines Overlay -->
+    <div class="scanlines"></div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

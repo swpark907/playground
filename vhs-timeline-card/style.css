@@ -1,0 +1,728 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Major Mono Display', monospace;
+    background: #0a0a0a;
+    color: #ffffff;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+}
+
+/* Scanlines effect */
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    background: linear-gradient(
+        transparent 50%,
+        rgba(0, 255, 0, 0.02) 50%
+    );
+    background-size: 100% 4px;
+}
+
+/* VHS Header */
+.vhs-header {
+    position: fixed;
+    top: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    z-index: 100;
+    font-size: 14px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.header-left, .header-right {
+    display: flex;
+    gap: 15px;
+}
+
+.play-indicator {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.mode {
+    color: #00ff00;
+}
+
+.timer {
+    font-size: 18px;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 5px 15px;
+    border-radius: 3px;
+}
+
+.rec-indicator {
+    color: #ff0000;
+}
+
+/* Main Content */
+.main-content {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scene {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.scene.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Scene 1: VHS Insertion */
+.vhs-noise {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #1a1a1a;
+}
+
+.static {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle, transparent 20%, rgba(255, 255, 255, 0.05) 20.5%, rgba(255, 255, 255, 0.05) 21%, transparent 21.5%),
+        radial-gradient(circle, transparent 20%, rgba(255, 255, 255, 0.03) 20.5%, rgba(255, 255, 255, 0.03) 21%, transparent 21.5%);
+    background-size: 3px 3px, 7px 7px;
+}
+
+.insertion-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 2;
+}
+
+.glitch-text {
+    font-size: 24px;
+    text-shadow: 
+        1px 0 #ff0000,
+        -1px 0 #00ffff,
+        0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.loading-bar {
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 20px auto;
+    overflow: hidden;
+}
+
+.loading-progress {
+    width: 0%;
+    height: 100%;
+    background: #00ff00;
+    animation: loadingOnce 2s ease-out forwards;
+}
+
+@keyframes loadingOnce {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+/* Scene 2: VHS Tape Label */
+.tape-label-scene {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1000px;
+}
+
+.vhs-tape-label {
+    width: 450px;
+    height: 280px;
+    background: linear-gradient(145deg, #f0f0f0 0%, #e0e0e0 50%, #d0d0d0 100%);
+    border: 3px solid #333333;
+    border-radius: 8px;
+    padding: 20px;
+    color: #000000;
+    font-family: 'Courier New', monospace;
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+@keyframes tapeSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px) rotateY(-15deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0) rotateY(0deg);
+    }
+}
+
+.label-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #333333;
+    padding-bottom: 8px;
+}
+
+.label-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.label-volume {
+    font-size: 14px;
+    color: #666666;
+    background: #000000;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 3px;
+}
+
+.label-line {
+    height: 2px;
+    background: #333333;
+    margin: 10px 0;
+}
+
+.label-content {
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    padding: 2px 0;
+}
+
+.label-key {
+    font-size: 12px;
+    color: #333333;
+    font-weight: bold;
+}
+
+.label-value {
+    font-size: 12px;
+    color: #000000;
+}
+
+.label-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.rewind-icon, .fast-forward-icon {
+    font-size: 16px;
+    color: #333333;
+}
+
+.tape-holes {
+    display: flex;
+    gap: 60px;
+}
+
+.hole {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #000000 0%, #333333 70%);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Scene 3: Name and Title */
+.subtitle-scene {
+    text-align: center;
+}
+
+.subtitle-box {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 40px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+}
+
+.name {
+    font-size: 48px;
+    margin-bottom: 10px;
+    text-shadow: 
+        3px 3px 0 #000000,
+        0 0 20px rgba(255, 255, 255, 0.5);
+    animation: subtitleSlide 1s ease-out;
+}
+
+.title {
+    font-size: 24px;
+    color: #00ff00;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 0 #000000;
+    animation: subtitleSlide 1s ease-out 0.3s both;
+}
+
+.description {
+    font-size: 16px;
+    color: #cccccc;
+    text-shadow: 1px 1px 0 #000000;
+    animation: subtitleSlide 1s ease-out 0.6s both;
+}
+
+@keyframes subtitleSlide {
+    0% {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Scene 4: Portfolio */
+.portfolio-scene {
+    text-align: left;
+    max-width: 600px;
+}
+
+.portfolio-title {
+    font-size: 36px;
+    color: #ff6b6b;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 0 #000000;
+    border-bottom: 2px solid #ff6b6b;
+    padding-bottom: 10px;
+}
+
+.portfolio-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+@keyframes portfolioSlide {
+    0% {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Scene 5: Contact Card */
+.contact-scene {
+    perspective: 1000px;
+}
+
+@keyframes cardFlip {
+    0% {
+        opacity: 0;
+        transform: rotateY(-90deg) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: rotateY(0deg) scale(1);
+    }
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.card-name {
+    font-size: 32px;
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 0 #000000;
+}
+
+.card-title {
+    font-size: 16px;
+    color: #00ff00;
+    text-shadow: 1px 1px 0 #000000;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-label {
+    font-size: 12px;
+    color: #888888;
+}
+
+/* VHS Controls */
+.vhs-controls {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.control-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    justify-content: center;
+}
+
+.control-btn {
+    background: #2a2a2a;
+    color: #ffffff;
+    border: 1px solid #555555;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-family: 'Major Mono Display', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    text-shadow: 1px 1px 0 #000000;
+    transition: all 0.2s ease;
+}
+
+.control-btn:hover {
+    background: #3a3a3a;
+    border-color: #777777;
+    transform: translateY(-1px);
+}
+
+.control-btn:active {
+    transform: translateY(0);
+    background: #1a1a1a;
+}
+
+.control-btn.active {
+    background: #00ff00;
+    color: #000000;
+    border-color: #00ff00;
+}
+
+/* Timeline */
+.timeline {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.timeline-bar {
+    position: relative;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.timeline-progress {
+    height: 100%;
+    background: #00ff00;
+    width: 0%;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.timeline-markers {
+    position: absolute;
+    top: -25px;
+    left: 0;
+    right: 0;
+    height: 20px;
+}
+
+.marker {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: #888888;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 2px;
+    transition: color 0.2s ease;
+}
+
+.marker:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.marker.active {
+    color: #00ff00;
+}
+
+/* Enhanced styles for Scene 3 */
+.tech-stack {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tech-category {
+    margin-bottom: 15px;
+}
+
+.category-label {
+    font-size: 12px;
+    color: #888888;
+    display: block;
+    margin-bottom: 8px;
+    text-shadow: 1px 1px 0 #000000;
+}
+
+.tech-items {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.tech-item {
+    background: rgba(0, 255, 0, 0.1);
+    border: 1px solid #00ff00;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    color: #00ff00;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+    box-shadow: 0 0 3px rgba(0, 255, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+/* Enhanced styles for Scene 4 */
+.portfolio-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid #00ff00;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    animation: portfolioSlide 0.8s ease-out;
+    transition: all 0.3s ease;
+}
+
+.portfolio-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-left-color: #ff6b6b;
+    transform: translateX(5px);
+}
+
+.project-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.project-name {
+    font-size: 18px;
+    text-shadow: 1px 1px 0 #000000;
+    color: #ffffff;
+}
+
+.project-desc {
+    font-size: 14px;
+    color: #cccccc;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.4;
+}
+
+.project-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.project-tech {
+    font-size: 12px;
+    color: #888888;
+    font-family: monospace;
+}
+
+.project-impact {
+    font-size: 12px;
+    color: #00ff00;
+    background: rgba(0, 255, 0, 0.1);
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+/* Enhanced styles for Scene 5 */
+.business-card {
+    width: 450px;
+    height: 320px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    border: 2px solid #00ff00;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-footer {
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.availability {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-indicator {
+    color: #00ff00;
+    font-size: 12px;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+    transition: color 0.3s ease;
+}
+
+.status-text {
+    font-size: 12px;
+    color: #cccccc;
+    text-shadow: 1px 1px 0 #000000;
+}
+
+.contact-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 2px 0;
+    transition: all 0.2s ease;
+}
+
+.contact-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.contact-value {
+    font-size: 13px;
+    color: #ffffff;
+    text-shadow: 1px 1px 0 #000000;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .vhs-header {
+        padding: 0 20px;
+        font-size: 12px;
+    }
+    
+    .timer {
+        font-size: 16px;
+        padding: 3px 10px;
+    }
+    
+    .name {
+        font-size: 36px;
+    }
+    
+    .title {
+        font-size: 20px;
+    }
+    
+    .business-card {
+        width: 320px;
+        height: 200px;
+        padding: 20px;
+    }
+    
+    .card-name {
+        font-size: 24px;
+    }
+    
+    .portfolio-scene {
+        max-width: 90%;
+    }
+    
+    .portfolio-title {
+        font-size: 28px;
+    }
+    
+    .timeline {
+        width: 250px;
+    }
+    
+    .vhs-tape-label {
+        width: 90%;
+        height: auto;
+        padding: 15px;
+    }
+    
+    .label-title {
+        font-size: 16px;
+    }
+    
+    .business-card {
+        width: 90%;
+        height: auto;
+        padding: 20px;
+    }
+    
+    .portfolio-scene {
+        max-width: 95%;
+        padding: 0 10px;
+    }
+    
+    .project-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .tech-items {
+        justify-content: center;
+    }
+} 
