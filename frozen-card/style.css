@@ -1,0 +1,483 @@
+/* 기본 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Orbitron', monospace;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #888;
+}
+
+.container {
+    perspective: 1000px;
+}
+
+/* 명함 기본 스타일 */
+.business-card {
+    width: 890px;
+    height: 510px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(100, 200, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(100, 200, 255, 0.2);
+    transition: transform 0.3s ease;
+    cursor: crosshair;
+}
+
+.business-card:hover {
+    transform: translateY(-5px) rotateX(5deg);
+}
+
+/* 카드 내용 */
+.card-content {
+    padding: 40px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+/* 얼음 효과를 위한 복제된 콘텐츠 */
+.card-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+/* 이름 섹션 */
+.name-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.name {
+    font-size: 48px;
+    font-weight: 900;
+    color: #ccc;
+    margin-bottom: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 400;
+    color: #888;
+    letter-spacing: 2px;
+}
+
+/* 연락처 섹션 */
+.contact-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+.contact-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+}
+
+.label {
+    color: #666;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.value {
+    color: #aaa;
+    font-weight: 400;
+}
+
+/* 스킬 섹션 */
+.skills-section {
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 24px;
+    color: #666;
+    margin-bottom: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.skill {
+    background: rgba(100, 200, 255, 0.1);
+    color: #aaa;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 400;
+    border: 1px solid rgba(100, 200, 255, 0.2);
+}
+
+/* 인용구 섹션 */
+.quote-section {
+    text-align: center;
+}
+
+.quote {
+    font-size: 20px;
+    color: #777;
+    font-style: italic;
+    font-weight: 400;
+}
+
+/* 얼음 효과를 위한 복제된 콘텐츠 */
+.frozen-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(0, 255, 255, 0.1) 0%, transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(100, 200, 255, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 60% 20%, rgba(150, 220, 255, 0.06) 0%, transparent 35%),
+        radial-gradient(circle at 40% 80%, rgba(0, 200, 255, 0.05) 0%, transparent 20%);
+    border-radius: inherit;
+}
+
+/* 얼음 효과 스타일 - 텍스트 색상 변경 */
+.frozen-content .name {
+    color: #00ffff;
+    text-shadow: 
+        0 0 5px #00ffff,
+        0 0 10px #00ffff,
+        0 0 15px #64c8ff,
+        0 0 20px #64c8ff,
+        0 0 30px #96dcff,
+        0 0 40px #96dcff;
+    filter: brightness(1.8) saturate(2.5) drop-shadow(0 0 8px #00ffff);
+    animation: iceGlow 2s ease-in-out infinite alternate;
+}
+
+.frozen-content .title {
+    color: #64c8ff;
+    text-shadow: 
+        0 0 3px #64c8ff,
+        0 0 6px #64c8ff,
+        0 0 10px #96dcff,
+        0 0 15px #96dcff;
+    filter: brightness(1.5) saturate(2) drop-shadow(0 0 5px #64c8ff);
+    animation: iceGlow 2.5s ease-in-out infinite alternate;
+}
+
+.frozen-content .label {
+    color: #00ccff;
+    text-shadow: 
+        0 0 3px #00ccff,
+        0 0 6px #00ccff,
+        0 0 10px #64c8ff;
+    filter: brightness(1.6) saturate(2) drop-shadow(0 0 3px #00ccff);
+    animation: iceGlow 3s ease-in-out infinite alternate;
+}
+
+.frozen-content .value {
+    color: #66ddff;
+    text-shadow: 
+        0 0 3px #66ddff,
+        0 0 6px #66ddff,
+        0 0 10px #96dcff;
+    filter: brightness(1.5) saturate(2) drop-shadow(0 0 3px #66ddff);
+    animation: iceGlow 3.5s ease-in-out infinite alternate;
+}
+
+.frozen-content .section-title {
+    color: #00ccff;
+    text-shadow: 
+        0 0 5px #00ccff,
+        0 0 10px #00ccff,
+        0 0 15px #64c8ff,
+        0 0 20px #64c8ff;
+    filter: brightness(1.7) saturate(2.2) drop-shadow(0 0 5px #00ccff);
+    animation: iceGlow 2.8s ease-in-out infinite alternate;
+}
+
+.frozen-content .skill {
+    background: 
+        linear-gradient(135deg, rgba(0, 255, 255, 0.4) 0%, rgba(100, 200, 255, 0.2) 100%),
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
+    color: #00ffff;
+    border: 1px solid #00ffff;
+    text-shadow: 
+        0 0 3px #00ffff,
+        0 0 6px #00ffff,
+        0 0 10px #64c8ff;
+    box-shadow: 
+        0 0 15px rgba(0, 255, 255, 0.5),
+        inset 0 0 15px rgba(0, 255, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    filter: brightness(1.5) saturate(2) drop-shadow(0 0 3px #00ffff);
+    animation: iceShimmer 3s ease-in-out infinite;
+}
+
+.frozen-content .quote {
+    color: #88eeff;
+    text-shadow: 
+        0 0 4px #88eeff,
+        0 0 8px #88eeff,
+        0 0 12px #aaffff;
+    filter: brightness(1.4) saturate(1.8) drop-shadow(0 0 4px #88eeff);
+    animation: iceGlow 4s ease-in-out infinite alternate;
+}
+
+/* 얼음 효과가 적용된 상태 */
+.business-card.frozen .frozen-content {
+    opacity: 1;
+    mask-image: radial-gradient(circle 120px at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                                rgba(0,0,0,1) 0%, 
+                                rgba(0,0,0,0.9) 30%, 
+                                rgba(0,0,0,0.7) 50%,
+                                rgba(0,0,0,0.4) 70%,
+                                rgba(0,0,0,0.2) 85%,
+                                rgba(0,0,0,0) 100%);
+    -webkit-mask-image: radial-gradient(circle 120px at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                                        rgba(0,0,0,1) 0%, 
+                                        rgba(0,0,0,0.9) 30%, 
+                                        rgba(0,0,0,0.7) 50%,
+                                        rgba(0,0,0,0.4) 70%,
+                                        rgba(0,0,0,0.2) 85%,
+                                        rgba(0,0,0,0) 100%);
+}
+
+/* 눈바람 효과 */
+.business-card.frozen .frozen-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle 5px at 25% 20%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.3) 30%, transparent 70%),
+        radial-gradient(circle 3px at 75% 10%, rgba(200, 240, 255, 0.8) 0%, rgba(200, 240, 255, 0.2) 40%, transparent 80%),
+        radial-gradient(circle 7px at 50% 30%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.2) 25%, transparent 60%),
+        radial-gradient(circle 4px at 80% 40%, rgba(180, 230, 255, 0.8) 0%, rgba(180, 230, 255, 0.3) 35%, transparent 75%),
+        radial-gradient(circle 6px at 15% 50%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.2) 30%, transparent 70%),
+        radial-gradient(circle 2px at 90% 25%, rgba(220, 245, 255, 0.9) 0%, rgba(220, 245, 255, 0.3) 40%, transparent 80%);
+    background-size: 100px 100px, 80px 80px, 120px 120px, 90px 90px, 110px 110px, 70px 70px;
+    animation: snowFall 4s linear infinite;
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+/* 터치 효과 (모바일) */
+.business-card.touch-frozen .frozen-content {
+    opacity: 1;
+    mask-image: radial-gradient(circle 120px at var(--touch-x, 50%) var(--touch-y, 50%), 
+                                rgba(0,0,0,1) 0%, 
+                                rgba(0,0,0,0.9) 30%, 
+                                rgba(0,0,0,0.7) 50%,
+                                rgba(0,0,0,0.4) 70%,
+                                rgba(0,0,0,0.2) 85%,
+                                rgba(0,0,0,0) 100%);
+    -webkit-mask-image: radial-gradient(circle 120px at var(--touch-x, 50%) var(--touch-y, 50%), 
+                                        rgba(0,0,0,1) 0%, 
+                                        rgba(0,0,0,0.9) 30%, 
+                                        rgba(0,0,0,0.7) 50%,
+                                        rgba(0,0,0,0.4) 70%,
+                                        rgba(0,0,0,0.2) 85%,
+                                        rgba(0,0,0,0) 100%);
+    transition: opacity 2s ease-out;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1024px) {
+    .business-card {
+        width: 700px;
+        height: 400px;
+    }
+    
+    .card-content {
+        padding: 30px;
+    }
+    
+    .name {
+        font-size: 36px;
+    }
+    
+    .title {
+        font-size: 18px;
+    }
+    
+    .contact-item {
+        font-size: 16px;
+    }
+    
+    .section-title {
+        font-size: 18px;
+    }
+    
+    .skill {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+    
+    .quote {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .business-card {
+        width: 500px;
+        height: 300px;
+    }
+    
+    .card-content {
+        padding: 20px;
+    }
+    
+    .name {
+        font-size: 28px;
+    }
+    
+    .title {
+        font-size: 14px;
+    }
+    
+    .contact-item {
+        font-size: 12px;
+    }
+    
+    .section-title {
+        font-size: 14px;
+    }
+    
+    .skill {
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+    
+    .quote {
+        font-size: 12px;
+    }
+}
+
+/* 애니메이션 키프레임 */
+@keyframes iceGlow {
+    0% {
+        filter: brightness(1.8) saturate(2.5) drop-shadow(0 0 8px #00ffff);
+        text-shadow: 
+            0 0 5px #00ffff,
+            0 0 10px #00ffff,
+            0 0 15px #64c8ff,
+            0 0 20px #64c8ff,
+            0 0 30px #96dcff,
+            0 0 40px #96dcff;
+    }
+    100% {
+        filter: brightness(2.2) saturate(3) drop-shadow(0 0 12px #00ffff);
+        text-shadow: 
+            0 0 8px #00ffff,
+            0 0 15px #00ffff,
+            0 0 20px #64c8ff,
+            0 0 25px #64c8ff,
+            0 0 35px #96dcff,
+            0 0 45px #96dcff;
+    }
+}
+
+@keyframes iceShimmer {
+    0% {
+        box-shadow: 
+            0 0 15px rgba(0, 255, 255, 0.5),
+            inset 0 0 15px rgba(0, 255, 255, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+    50% {
+        box-shadow: 
+            0 0 25px rgba(0, 255, 255, 0.8),
+            inset 0 0 25px rgba(0, 255, 255, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+    100% {
+        box-shadow: 
+            0 0 15px rgba(0, 255, 255, 0.5),
+            inset 0 0 15px rgba(0, 255, 255, 0.2),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+}
+
+@keyframes snowFall {
+    0% { 
+        transform: translateX(0px) translateY(-20px);
+        opacity: 0.3;
+    }
+    25% { 
+        transform: translateX(-3px) translateY(0px);
+        opacity: 0.8;
+    }
+    50% { 
+        transform: translateX(2px) translateY(20px);
+        opacity: 1;
+    }
+    75% { 
+        transform: translateX(-1px) translateY(40px);
+        opacity: 0.7;
+    }
+    100% { 
+        transform: translateX(1px) translateY(60px);
+        opacity: 0.2;
+    }
+}
+
+
+
+/* 얼음 결정 효과 (추가 장식) */
+.business-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(100, 200, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(150, 220, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 60% 20%, rgba(120, 210, 255, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+    border-radius: inherit;
+} 
