@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LED 명함 카드</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 기존 간판 스타일 카드 -->
+        <div class="card sign-style">
+            <h1 class="led-text" id="mainText">CREATIVE DEVELOPER</h1>
+            <h2 class="led-text" id="nameText">JOHN DOE</h2>
+            <p class="led-text" id="emailText">john.doe@example.com</p>
+            <p class="led-text" id="phoneText">+82 10-1234-5678</p>
+        </div>
+        
+        <!-- 새로운 명함 스타일 카드 -->
+        <div class="card business-card">
+            <div class="card-header">
+                <h2 class="led-text company-name" id="companyText">TECH SOLUTIONS</h2>
+                <div class="led-text position" id="positionText">Senior Frontend Developer</div>
+            </div>
+            
+            <div class="card-body">
+                <h1 class="led-text name" id="cardNameText">김 민 수</h1>
+                <div class="led-text name-en" id="cardNameEnText">KIM MIN SOO</div>
+            </div>
+            
+            <div class="card-footer">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="led-text label" id="emailLabelText">EMAIL</span>
+                        <span class="led-text value" id="cardEmailText">minso.kim@techsolutions.co.kr</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="led-text label" id="phoneLabelText">MOBILE</span>
+                        <span class="led-text value" id="cardPhoneText">+82 10-9876-5432</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="led-text label" id="websiteLabelText">WEBSITE</span>
+                        <span class="led-text value" id="cardWebsiteText">www.techsolutions.co.kr</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 

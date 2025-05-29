@@ -1,0 +1,320 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Orbitron', monospace;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    cursor: none;
+}
+
+.container {
+    perspective: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+    align-items: center;
+}
+
+.card {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #333;
+    border-radius: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 
+        0 0 50px rgba(0, 255, 255, 0.1),
+        inset 0 0 50px rgba(0, 255, 255, 0.05);
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+}
+
+/* 기존 간판 스타일 카드 */
+.sign-style {
+    padding: 60px 80px;
+}
+
+.card:hover {
+    transform: rotateY(5deg) rotateX(5deg);
+}
+
+/* 새로운 명함 스타일 카드 */
+.business-card {
+    width: 500px;
+    height: 320px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.business-card .card-header {
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(0, 150, 255, 0.1) 100%);
+    padding: 20px 30px 15px;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+.business-card .card-body {
+    flex: 1;
+    padding: 25px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.business-card .card-footer {
+    padding: 20px 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* 명함 텍스트 스타일 */
+.business-card .company-name {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #00ffff;
+    margin: 0 0 8px 0;
+    letter-spacing: 2px;
+    text-shadow: 0 0 2px currentColor;
+}
+
+.business-card .position {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #cccccc;
+    margin: 0;
+    letter-spacing: 1px;
+    text-shadow: 0 0 1px currentColor;
+}
+
+.business-card .name {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #ffffff;
+    margin: 0 0 8px 0;
+    letter-spacing: 4px;
+    text-shadow: 0 0 2px currentColor;
+}
+
+.business-card .name-en {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #aaaaaa;
+    margin: 0;
+    letter-spacing: 2px;
+    text-shadow: 0 0 1px currentColor;
+}
+
+.business-card .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.business-card .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-height: 20px;
+}
+
+.business-card .label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #00ffff;
+    width: 75px;
+    margin: 0;
+    letter-spacing: 1px;
+    text-shadow: 0 0 2px currentColor;
+    flex-shrink: 0;
+}
+
+.business-card .value {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #ffffff;
+    margin: 0;
+    letter-spacing: 1px;
+    text-shadow: 0 0 1px currentColor;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.led-text {
+    color: #ffffff;
+    margin: 20px 0;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    user-select: none;
+    position: relative;
+}
+
+#mainText {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 30px;
+}
+
+#nameText {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: #00ffff;
+}
+
+#emailText, #phoneText {
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: #cccccc;
+}
+
+.led-text span {
+    display: inline-block;
+    transition: all 0.1s ease;
+    text-shadow: 0 0 1px currentColor;
+    filter: none;
+    opacity: 0.9;
+}
+
+/* 기본 빛 효과 */
+.led-text span.glow-1 {
+    text-shadow: 
+        0 0 4px currentColor,
+        0 0 8px currentColor;
+    filter: drop-shadow(0 0 3px currentColor);
+    opacity: 0.95;
+}
+
+.led-text span.glow-2 {
+    text-shadow: 
+        0 0 6px currentColor,
+        0 0 12px currentColor,
+        0 0 18px currentColor;
+    filter: drop-shadow(0 0 5px currentColor);
+    opacity: 1;
+}
+
+.led-text span.glow-3 {
+    text-shadow: 
+        0 0 10px currentColor,
+        0 0 18px currentColor,
+        0 0 26px currentColor,
+        0 0 34px currentColor;
+    filter: drop-shadow(0 0 10px currentColor);
+    opacity: 1;
+}
+
+.led-text span.glow-4 {
+    text-shadow: 
+        0 0 14px currentColor,
+        0 0 22px currentColor,
+        0 0 30px currentColor,
+        0 0 38px currentColor,
+        0 0 46px currentColor;
+    filter: drop-shadow(0 0 18px currentColor);
+    transform: scale(1.02);
+    opacity: 1;
+}
+
+/* 커서 효과 */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, rgba(0, 255, 255, 0.8) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .container {
+        gap: 50px;
+        padding: 20px;
+    }
+    
+    .card {
+        padding: 40px 50px;
+    }
+    
+    .sign-style {
+        padding: 40px 50px;
+    }
+    
+    #mainText {
+        font-size: 2.5rem;
+    }
+    
+    #nameText {
+        font-size: 2rem;
+    }
+    
+    #emailText, #phoneText {
+        font-size: 1rem;
+    }
+    
+    /* 명함 카드 반응형 */
+    .business-card {
+        width: 90vw;
+        max-width: 400px;
+        height: auto;
+        min-height: 280px;
+    }
+    
+    .business-card .card-header {
+        padding: 15px 20px 12px;
+    }
+    
+    .business-card .card-body {
+        padding: 20px;
+    }
+    
+    .business-card .card-footer {
+        padding: 15px 20px;
+    }
+    
+    .business-card .company-name {
+        font-size: 1rem;
+    }
+    
+    .business-card .position {
+        font-size: 0.8rem;
+    }
+    
+    .business-card .name {
+        font-size: 1.8rem;
+        letter-spacing: 3px;
+    }
+    
+    .business-card .name-en {
+        font-size: 0.9rem;
+    }
+    
+    .business-card .label {
+        font-size: 0.65rem;
+        width: 50px;
+    }
+    
+    .business-card .value {
+        font-size: 0.8rem;
+    }
+} 
