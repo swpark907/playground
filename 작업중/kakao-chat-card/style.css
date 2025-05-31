@@ -1,0 +1,310 @@
+/* 전체 초기화 및 기본 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* 명함 전체 컨테이너 */
+.business-card {
+    width: 890px;
+    height: 510px;
+    background-color: #B2C7DA;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid #FAE100;
+}
+
+/* 채팅방 헤더 */
+.chat-header {
+    background: linear-gradient(135deg, #FAE100 0%, #FFE812 100%);
+    padding: 16px 20px;
+    border-bottom: 2px solid #E6CC00;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-image {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #ffffff;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2C1810;
+    margin-bottom: 2px;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.status {
+    font-size: 13px;
+    color: #5D4037;
+    font-weight: 500;
+}
+
+/* 명함 라벨 */
+.business-card-label {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #333;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 날짜 구분선 */
+.date-divider {
+    text-align: center;
+    margin: 16px 0 20px 0;
+    position: relative;
+}
+
+.date-divider span {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 6px 16px;
+    border-radius: 16px;
+    font-size: 12px;
+    color: #666;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 채팅 메시지 영역 */
+.chat-messages {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+}
+
+/* 메시지 말풍선 - 받은 메시지 (왼쪽) */
+.message-bubble {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    max-width: 75%;
+    position: relative;
+}
+
+.message-bubble.sent {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.bubble-content {
+    background-color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333333;
+    position: relative;
+    word-wrap: break-word;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    max-width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* 받은 메시지 스타일 */
+.message-bubble:not(.sent) .bubble-content {
+    border-bottom-left-radius: 4px;
+}
+
+.message-bubble:not(.sent) .bubble-content::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 10px 6px;
+    border-color: transparent transparent #ffffff transparent;
+}
+
+/* 보낸 메시지 스타일 (노란색) */
+.message-bubble.sent .bubble-content {
+    background: linear-gradient(135deg, #FFE812 0%, #FFF455 100%);
+    border-bottom-right-radius: 4px;
+    color: #2C1810;
+}
+
+.message-bubble.sent .bubble-content::before {
+    content: '';
+    position: absolute;
+    right: -6px;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 6px 10px 0;
+    border-color: transparent #FFE812 transparent transparent;
+}
+
+.message-time {
+    font-size: 11px;
+    color: #666666;
+    white-space: nowrap;
+    align-self: flex-end;
+    margin-bottom: 2px;
+}
+
+/* 명함 하단 정보 */
+.business-card-footer {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+    padding: 12px 20px;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.company-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.company-info span {
+    font-size: 11px;
+    color: #666;
+}
+
+/* 읽음 표시 */
+.read-status {
+    font-size: 11px;
+    color: #666666;
+    background-color: rgba(250, 225, 0, 0.2);
+    padding: 4px 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(250, 225, 0, 0.3);
+}
+
+/* 강조 텍스트 */
+strong {
+    color: #2C1810;
+    font-weight: 600;
+}
+
+/* 작은 텍스트 */
+small {
+    font-size: 12px;
+    color: #888;
+    font-style: italic;
+}
+
+/* 반응형 조정 (필요시) */
+@media (max-width: 920px) {
+    .business-card {
+        width: 100%;
+        max-width: 890px;
+        height: auto;
+        min-height: 510px;
+    }
+}
+
+/* 애니메이션 효과 */
+.business-card {
+    animation: cardAppear 0.8s ease-out;
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.9) rotateX(10deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotateX(0deg);
+    }
+}
+
+/* 메시지 애니메이션 */
+.message-bubble {
+    animation: messageSlide 0.4s ease-out;
+}
+
+@keyframes messageSlide {
+    from {
+        opacity: 0;
+        transform: translateX(-30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+.message-bubble.sent {
+    animation: messageSlideSent 0.4s ease-out;
+}
+
+@keyframes messageSlideSent {
+    from {
+        opacity: 0;
+        transform: translateX(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+/* 호버 효과 */
+.business-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+}
+
+.message-bubble:hover .bubble-content {
+    transform: scale(1.02);
+    transition: transform 0.2s ease;
+} 
