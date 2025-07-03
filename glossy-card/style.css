@@ -1,0 +1,385 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #0a0a0a; /* 더 어두운 무광 배경 */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    cursor: none;
+}
+
+.container {
+    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 광택 명함 카드 */
+.glossy-card {
+    width: 960px;
+    height: 600px;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+    position: relative;
+    cursor: pointer;
+}
+
+.glossy-card.flipped {
+    transform: rotateY(180deg) !important;
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(145deg, #0f0f0f, #050505); /* 더 어두운 무광 그라데이션 */
+    border: 1px solid #222;
+    border-radius: 12px;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backface-visibility: hidden;
+    overflow: hidden;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+.card-face::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, transparent 0%, rgba(255, 255, 255, 0.02) 50%, transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.card-content {
+    padding: 32px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+}
+
+/* 앞면 헤더 */
+.card-front .card-header {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 뒷면 레이아웃 */
+.card-back {
+    position: relative;
+}
+
+.card-back::after {
+    content: 'SIX';
+    position: absolute;
+    top: 50%;
+    left: 56.5%;
+    transform: translate(-50%, -50%) rotate(0deg);
+    font-family: 'Inter', sans-serif;
+    font-size: 40rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    /* Fallback color for browsers that don't support background-clip: text */
+    color: rgba(0, 0, 0, 0.8);
+    background: linear-gradient(135deg, 
+        rgba(0, 0, 0, 0.8) 0%, 
+        rgba(10, 10, 10, 0.9) 25%, 
+        rgba(0, 0, 0, 0.7) 50%, 
+        rgba(10, 10, 10, 0.9) 75%, 
+        rgba(0, 0, 0, 0.8) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 
+        2px 2px 8px rgba(0, 0, 0, 0.3),
+        0 0 2px rgba(255, 255, 255, 0.05);
+    pointer-events: none;
+    z-index: 1;
+    user-select: none;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+/* Webkit browsers support check for watermark */
+@supports (-webkit-background-clip: text) {
+    .card-back::after {
+        color: transparent;
+    }
+}
+
+/* 호버 시 뒷면 워터마크 광택 효과 */
+.glossy-card:hover .card-back::after {
+    background: linear-gradient(135deg, 
+        rgba(20, 20, 20, 0.9) 0%, 
+        rgba(30, 30, 30, 1.0) 25%, 
+        rgba(0, 0, 0, 0.8) 50%, 
+        rgba(30, 30, 30, 1.0) 75%, 
+        rgba(20, 20, 20, 0.9) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 
+        2px 2px 8px rgba(0, 0, 0, 0.4),
+        0 0 4px rgba(0, 0, 0, 0.1),
+        0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.card-back .card-content {
+    padding: 48px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+}
+
+.card-back .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: flex-start;
+    margin: 90px 0;
+}
+
+.card-back .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+    width: 100%;
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.contact-row {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+/* 광택 텍스트 기본 스타일 - 완전히 새로운 접근 */
+.glossy-text {
+    font-weight: 500;
+    user-select: none;
+    position: relative;
+    z-index: 3;
+    /* 기본 색상 - 더 어둡게 */
+    color: #606060;
+    transition: all 0.5s ease;
+    /* 기본 그림자로 약간의 입체감 */
+    text-shadow: 
+        1px 1px 2px rgba(0, 0, 0, 0.6),
+        0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* 호버 시 전체 광택 효과 - 크기 변화 제거 */
+.glossy-card:hover .glossy-text {
+    color: #c0c0c0;
+    text-shadow: 
+        1px 1px 2px rgba(0, 0, 0, 0.8),
+        0 0 4px rgba(255, 255, 255, 0.4),
+        0 0 8px rgba(255, 255, 255, 0.3),
+        0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+/* 반짝이는 애니메이션 효과 */
+.glossy-text.shimmer {
+    animation: shimmerEffect 0.6s ease-out;
+}
+
+@keyframes shimmerEffect {
+    0% {
+        text-shadow: 
+            1px 1px 2px rgba(0, 0, 0, 0.6),
+            0 0 1px rgba(255, 255, 255, 0.05);
+    }
+    50% {
+        text-shadow: 
+            1px 1px 2px rgba(0, 0, 0, 0.8),
+            0 0 6px rgba(255, 255, 255, 0.6),
+            0 0 12px rgba(255, 255, 255, 0.4),
+            0 0 18px rgba(255, 255, 255, 0.3),
+            0 0 24px rgba(255, 255, 255, 0.2);
+    }
+    100% {
+        text-shadow: 
+            1px 1px 2px rgba(0, 0, 0, 0.8),
+            0 0 4px rgba(255, 255, 255, 0.4),
+            0 0 8px rgba(255, 255, 255, 0.3),
+            0 0 12px rgba(255, 255, 255, 0.2);
+    }
+}
+
+.glossy-text span {
+    display: inline-block;
+}
+
+/* 메인 브랜드명 */
+.main-name {
+    font-size: 4.8rem;
+    font-weight: 900;
+    letter-spacing: 10px;
+    margin-bottom: 8px;
+    color: #707070;
+}
+
+.glossy-card:hover .main-name {
+    color: #d0d0d0;
+    text-shadow: 
+        2px 2px 4px rgba(0, 0, 0, 0.8),
+        0 0 5px rgba(255, 255, 255, 0.5),
+        0 0 10px rgba(255, 255, 255, 0.4),
+        0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.subtitle {
+    font-size: 2.1rem;
+    font-weight: 300;
+    letter-spacing: 8px;
+    color: #505050;
+}
+
+.glossy-card:hover .subtitle {
+    color: #b0b0b0;
+    text-shadow: 
+        1px 1px 3px rgba(0, 0, 0, 0.8),
+        0 0 4px rgba(255, 255, 255, 0.4),
+        0 0 8px rgba(255, 255, 255, 0.3),
+        0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.position {
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    color: #686868;
+}
+
+.name-ko {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 6px;
+    color: #808080;
+}
+
+.contact-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    width: 80px;
+    flex-shrink: 0;
+    color: #505050;
+}
+
+.contact-value {
+    font-size: 0.9rem;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    color: #707070;
+}
+
+/* 기존 복잡한 광택 효과 제거됨 - 새로운 단순한 접근법 사용 */
+
+/* 카드 호버 효과 */
+.glossy-card:hover {
+    transform: rotateY(2deg) rotateX(2deg);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* 커스텀 커서 */
+.custom-cursor {
+    position: fixed;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .glossy-card {
+        width: 90vw;
+        max-width: 400px;
+        height: 250px;
+    }
+    
+    .card-content {
+        padding: 24px;
+    }
+    
+    .main-name {
+        font-size: 2.2rem;
+        letter-spacing: 3px;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+        letter-spacing: 6px;
+    }
+    
+    .name-ko {
+        font-size: 1.4rem;
+        letter-spacing: 4px;
+    }
+    
+    .contact-row {
+        gap: 12px;
+    }
+    
+    .contact-label {
+        width: 60px;
+        font-size: 0.7rem;
+    }
+    
+    .contact-value {
+        font-size: 0.8rem;
+    }
+    
+    /* 반응형에서 워터마크 크기 조정 */
+    .card-back::after {
+        font-size: 18rem;
+        transform: translate(-50%, -50%) rotate(-15deg);
+    }
+} 

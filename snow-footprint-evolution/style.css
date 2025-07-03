@@ -1,0 +1,773 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Quicksand', 'Noto Sans KR', sans-serif;
+    background: 
+        radial-gradient(circle at 30% 20%, #e3e8f0 0%, #d1d9e6 50%, #c8d4e3 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.card {
+    width: 890px;
+    height: 510px;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 
+        0 30px 60px rgba(0, 20, 40, 0.2),
+        0 15px 30px rgba(0, 20, 40, 0.15),
+        0 5px 15px rgba(0, 20, 40, 0.1),
+        inset 0 2px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -1px 0 rgba(200, 220, 240, 0.3);
+    transform: perspective(1000px) rotateX(2deg);
+}
+
+.snow-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        /* 눈 결정체 육각형 패턴 */
+        radial-gradient(circle at 20% 30%, 
+            rgba(255, 255, 255, 0.95) 0%, 
+            rgba(240, 248, 255, 0.9) 30%, 
+            rgba(230, 240, 250, 0.7) 50%, 
+            rgba(220, 235, 250, 0.4) 70%, 
+            transparent 85%
+        ),
+        radial-gradient(circle at 80% 20%, 
+            rgba(255, 255, 255, 0.9) 0%, 
+            rgba(245, 250, 255, 0.8) 25%, 
+            rgba(235, 245, 255, 0.6) 45%, 
+            rgba(225, 240, 255, 0.3) 65%, 
+            transparent 80%
+        ),
+        radial-gradient(circle at 15% 75%, 
+            rgba(250, 255, 255, 0.85) 0%, 
+            rgba(240, 248, 255, 0.7) 35%, 
+            rgba(230, 242, 255, 0.5) 55%, 
+            rgba(220, 235, 250, 0.2) 75%, 
+            transparent 90%
+        ),
+        radial-gradient(circle at 85% 80%, 
+            rgba(255, 255, 255, 0.8) 0%, 
+            rgba(245, 252, 255, 0.6) 30%, 
+            rgba(235, 245, 255, 0.4) 50%, 
+            rgba(225, 238, 252, 0.2) 70%, 
+            transparent 85%
+        ),
+        radial-gradient(circle at 50% 40%, 
+            rgba(248, 253, 255, 0.7) 0%, 
+            rgba(238, 248, 255, 0.5) 40%, 
+            rgba(228, 240, 252, 0.3) 60%, 
+            transparent 80%
+        ),
+        
+        /* 기본 차가운 눈 배경 */
+        linear-gradient(135deg, 
+            #f8fbff 0%, 
+            #f0f6ff 15%, 
+            #e8f2ff 30%, 
+            #f2f8ff 45%, 
+            #f5f9ff 60%, 
+            #f0f6ff 75%, 
+            #f8fbff 100%
+        );
+    
+    background-size: 
+        180px 140px,
+        200px 160px,
+        160px 120px,
+        190px 150px,
+        170px 130px,
+        100% 100%;
+    
+    /* 차가운 눈의 질감 */
+    filter: contrast(1.1) brightness(1.08) saturate(0.8) blur(0.2px);
+}
+
+.snow-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        /* 눈 결정체 육각형 패턴 */
+        repeating-conic-gradient(
+            from 0deg at 25% 35%, 
+            transparent 0deg, 
+            rgba(240, 248, 255, 0.1) 60deg, 
+            transparent 120deg,
+            rgba(235, 245, 255, 0.08) 180deg,
+            transparent 240deg,
+            rgba(245, 250, 255, 0.06) 300deg,
+            transparent 360deg
+        ),
+        repeating-conic-gradient(
+            from 30deg at 75% 65%, 
+            transparent 0deg, 
+            rgba(250, 255, 255, 0.08) 60deg, 
+            transparent 120deg,
+            rgba(240, 248, 255, 0.06) 180deg,
+            transparent 240deg,
+            rgba(248, 253, 255, 0.04) 300deg,
+            transparent 360deg
+        ),
+        /* 미세한 차가운 질감 */
+        repeating-linear-gradient(
+            25deg,
+            transparent,
+            transparent 3px,
+            rgba(230, 240, 255, 0.02) 3px,
+            rgba(230, 240, 255, 0.02) 6px
+        );
+    background-size: 80px 80px, 100px 100px, 15px 15px;
+    opacity: 0.9;
+}
+
+.snow-background::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        /* 눈의 차가운 그림자 */
+        radial-gradient(ellipse 120px 80px at 20% 30%, 
+            rgba(200, 220, 240, 0.08) 20%, 
+            rgba(180, 210, 240, 0.04) 50%, 
+            transparent 80%
+        ),
+        radial-gradient(ellipse 140px 90px at 80% 70%, 
+            rgba(190, 215, 245, 0.06) 25%, 
+            rgba(170, 200, 235, 0.03) 55%, 
+            transparent 85%
+        ),
+        radial-gradient(ellipse 100px 60px at 40% 80%, 
+            rgba(210, 225, 245, 0.05) 30%, 
+            rgba(190, 210, 240, 0.02) 60%, 
+            transparent 90%
+        );
+    background-size: 250px 180px, 280px 200px, 220px 160px;
+}
+
+.content {
+    position: relative;
+    z-index: 3;
+    height: 100%;
+    display: grid;
+    grid-template-areas: 
+        ". . ."
+        ". name ."
+        ". title ."
+        ". quote ."
+        ". contact ."
+        ". . .";
+    grid-template-rows: 1fr auto auto auto auto 1fr;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    gap: 12px;
+}
+
+.name {
+    grid-area: name;
+    font-size: 52px;
+    font-weight: 600;
+    color: #2c3e50;
+    letter-spacing: 3px;
+    /* 차가운 눈에 깊게 파인 글씨 효과 */
+    text-shadow: 
+        /* 주요 그림자 (차가운 파인 효과) */
+        3px 3px 8px rgba(0, 30, 60, 0.3),
+        5px 5px 15px rgba(0, 20, 40, 0.2),
+        2px 2px 4px rgba(0, 40, 80, 0.25),
+        /* 차가운 눈의 반사광 */
+        -2px -2px 6px rgba(255, 255, 255, 0.95),
+        -4px -4px 12px rgba(240, 248, 255, 0.8),
+        -1px -1px 3px rgba(250, 255, 255, 1),
+        /* 차가운 내부 그림자 */
+        inset 2px 2px 4px rgba(0, 30, 60, 0.25),
+        inset -1px -1px 3px rgba(248, 253, 255, 0.9);
+    
+    filter: 
+        drop-shadow(2px 2px 4px rgba(0, 30, 60, 0.25))
+        drop-shadow(-2px -2px 3px rgba(245, 252, 255, 0.9))
+        contrast(1.2);
+}
+
+.title {
+    grid-area: title;
+    font-size: 26px;
+    font-weight: 400;
+    color: #34495e;
+    letter-spacing: 1.5px;
+    margin-top: 5px;
+    /* 중간 깊이의 차가운 파인 효과 */
+    text-shadow: 
+        2px 2px 5px rgba(0, 25, 50, 0.25),
+        3px 3px 10px rgba(0, 15, 30, 0.15),
+        -1px -1px 3px rgba(250, 255, 255, 0.9),
+        -2px -2px 6px rgba(240, 248, 255, 0.7),
+        inset 1px 1px 2px rgba(0, 25, 50, 0.2);
+    
+    filter: 
+        drop-shadow(1px 1px 3px rgba(0, 25, 50, 0.2))
+        drop-shadow(-1px -1px 2px rgba(245, 252, 255, 0.8))
+        contrast(1.15);
+}
+
+.quote {
+    grid-area: quote;
+    font-size: 19px;
+    font-weight: 300;
+    color: #5d6d7e;
+    font-style: italic;
+    letter-spacing: 0.8px;
+    line-height: 1.5;
+    margin-top: 10px;
+    /* 미세한 차가운 파인 효과 */
+    text-shadow: 
+        1px 1px 3px rgba(0, 20, 40, 0.2),
+        2px 2px 6px rgba(0, 15, 30, 0.1),
+        -0.5px -0.5px 2px rgba(248, 253, 255, 0.8),
+        -1px -1px 4px rgba(240, 248, 255, 0.6),
+        inset 0.5px 0.5px 1px rgba(0, 20, 40, 0.15);
+    
+    filter: 
+        drop-shadow(0.5px 0.5px 2px rgba(0, 20, 40, 0.15))
+        drop-shadow(-0.5px -0.5px 1px rgba(245, 252, 255, 0.7))
+        contrast(1.1);
+}
+
+.contact {
+    grid-area: contact;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.email, .phone {
+    font-size: 16px;
+    font-weight: 300;
+    color: #6c7b7f;
+    letter-spacing: 0.5px;
+    /* 매우 미세한 차가운 파인 효과 */
+    text-shadow: 
+        0.5px 0.5px 2px rgba(0, 15, 30, 0.15),
+        1px 1px 3px rgba(0, 10, 20, 0.08),
+        -0.3px -0.3px 1px rgba(250, 255, 255, 0.7),
+        -0.5px -0.5px 2px rgba(245, 252, 255, 0.5);
+    
+    filter: 
+        drop-shadow(0.3px 0.3px 1px rgba(0, 15, 30, 0.1))
+        drop-shadow(-0.3px -0.3px 0.5px rgba(248, 253, 255, 0.6))
+        contrast(1.05);
+}
+
+/* 호버 효과로 더욱 깊이감 표현 */
+.card:hover .name {
+    text-shadow: 
+        4px 4px 10px rgba(0, 35, 70, 0.35),
+        6px 6px 18px rgba(0, 25, 50, 0.25),
+        2px 2px 5px rgba(0, 45, 90, 0.3),
+        -3px -3px 8px rgba(255, 255, 255, 1),
+        -5px -5px 15px rgba(245, 252, 255, 0.9),
+        -2px -2px 4px rgba(252, 255, 255, 1),
+        inset 3px 3px 6px rgba(0, 35, 70, 0.3),
+        inset -2px -2px 4px rgba(250, 255, 255, 0.95);
+    transform: translateY(-1px) scale(1.01);
+    transition: all 0.5s ease;
+}
+
+.card:hover .title {
+    text-shadow: 
+        3px 3px 6px rgba(0, 30, 60, 0.3),
+        4px 4px 12px rgba(0, 20, 40, 0.2),
+        -1.5px -1.5px 4px rgba(252, 255, 255, 0.95),
+        -3px -3px 8px rgba(245, 252, 255, 0.8),
+        inset 1.5px 1.5px 3px rgba(0, 30, 60, 0.25);
+    transform: translateY(-0.5px);
+    transition: all 0.5s ease;
+}
+
+.card:hover .quote {
+    text-shadow: 
+        1.5px 1.5px 4px rgba(0, 25, 50, 0.25),
+        3px 3px 8px rgba(0, 15, 30, 0.15),
+        -0.8px -0.8px 3px rgba(250, 255, 255, 0.9),
+        -1.5px -1.5px 6px rgba(245, 252, 255, 0.7),
+        inset 0.8px 0.8px 1.5px rgba(0, 25, 50, 0.2);
+    transform: translateY(-0.3px);
+    transition: all 0.5s ease;
+}
+
+.card:hover .email,
+.card:hover .phone {
+    text-shadow: 
+        1px 1px 3px rgba(0, 20, 40, 0.2),
+        2px 2px 5px rgba(0, 15, 30, 0.12),
+        -0.5px -0.5px 2px rgba(252, 255, 255, 0.8),
+        -1px -1px 3px rgba(248, 253, 255, 0.6);
+    transform: translateY(-0.2px);
+    transition: all 0.5s ease;
+}
+
+/* 차가운 눈의 호흡 애니메이션 */
+@keyframes coldSnowBreathing {
+    0%, 100% { 
+        transform: translateY(0px) scale(1);
+        filter: contrast(1.1) brightness(1.08) saturate(0.8) blur(0.2px);
+    }
+    50% { 
+        transform: translateY(-0.3px) scale(1.001);
+        filter: contrast(1.12) brightness(1.1) saturate(0.75) blur(0.1px);
+    }
+}
+
+.snow-background {
+    animation: coldSnowBreathing 12s ease-in-out infinite;
+}
+
+/* 미세한 눈 입자 떠다니는 효과 */
+@keyframes snowParticleFloat {
+    0%, 100% { 
+        transform: translateY(0px) translateX(0px); 
+        opacity: 0.6;
+    }
+    25% { 
+        transform: translateY(-1px) translateX(0.5px); 
+        opacity: 0.8;
+    }
+    50% { 
+        transform: translateY(-0.5px) translateX(-0.3px); 
+        opacity: 0.7;
+    }
+    75% { 
+        transform: translateY(-1.2px) translateX(0.2px); 
+        opacity: 0.9;
+    }
+}
+
+.snow-background::before {
+    animation: snowParticleFloat 15s ease-in-out infinite;
+}
+
+@keyframes textFloat {
+    0%, 100% { 
+        transform: translateY(0px); 
+    }
+    50% { 
+        transform: translateY(-0.8px); 
+    }
+}
+
+.content {
+    animation: textFloat 14s ease-in-out infinite;
+}
+
+/* 반응형 조정 */
+@media (max-width: 920px) {
+    .card {
+        width: 95vw;
+        height: calc(95vw * 510 / 890);
+        max-width: 890px;
+        max-height: 510px;
+    }
+    
+    .name {
+        font-size: clamp(36px, 6vw, 52px);
+    }
+    
+    .title {
+        font-size: clamp(20px, 3.5vw, 26px);
+    }
+    
+    .quote {
+        font-size: clamp(16px, 2.8vw, 19px);
+    }
+}
+
+/* 발자국 효과 */
+.footprint {
+    position: absolute;
+    width: 25px;
+    height: 35px;
+    pointer-events: none;
+    z-index: 4;
+    opacity: 0;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.footprint::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 22px;
+    background: 
+        radial-gradient(ellipse 16px 20px at center, 
+            rgba(0, 30, 60, 0.15) 0%, 
+            rgba(0, 25, 50, 0.12) 30%, 
+            rgba(0, 20, 40, 0.08) 60%, 
+            transparent 80%
+        );
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    box-shadow: 
+        inset 1px 1px 3px rgba(0, 30, 60, 0.1),
+        inset -1px -1px 2px rgba(200, 220, 240, 0.3);
+}
+
+.footprint::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 8px;
+    background: 
+        radial-gradient(ellipse 10px 6px at center, 
+            rgba(0, 25, 50, 0.12) 0%, 
+            rgba(0, 20, 40, 0.08) 50%, 
+            transparent 80%
+        );
+    border-radius: 50%;
+    box-shadow: 
+        inset 0.5px 0.5px 2px rgba(0, 25, 50, 0.08),
+        inset -0.5px -0.5px 1px rgba(200, 220, 240, 0.2);
+}
+
+.footprint.visible {
+    opacity: 1;
+}
+
+.footprint.fading {
+    opacity: 0;
+    transition: opacity 1.5s ease-out;
+}
+
+/* HTML 요소로 생성되는 눈송이 스타일 */
+.snowflake {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, 
+        rgb(176, 211, 255) 0%, 
+        rgba(160, 210, 255, 0.8) 30%, 
+        rgba(200, 230, 255, 0.4) 70%, 
+        transparent 100%
+    );
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+    box-shadow: 
+        0 0 3px rgba(120, 180, 255, 0.6),
+        0 0 6px rgba(160, 210, 255, 0.3);
+    animation: snowflakeFall 15s linear infinite;
+}
+
+.snowflake.small {
+    width: 3px;
+    height: 3px;
+    animation-duration: 12s;
+}
+
+.snowflake.medium {
+    width: 4px;
+    height: 4px;
+    animation-duration: 14s;
+}
+
+.snowflake.large {
+    width: 8px;
+    height: 8px;
+    animation-duration: 18s;
+}
+
+@keyframes snowflakeFall {
+    0% {
+        transform: translateY(-20px) translateX(0px) scale(1);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    20% {
+        transform: translateY(100px) translateX(5px) scale(1.1);
+        opacity: 1;
+    }
+    40% {
+        transform: translateY(250px) translateX(-3px) scale(0.9);
+        opacity: 0.8;
+    }
+    60% {
+        transform: translateY(400px) translateX(8px) scale(1.05);
+        opacity: 0.9;
+    }
+    80% {
+        transform: translateY(520px) translateX(-2px) scale(0.95);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(600px) translateX(0px) scale(1);
+        opacity: 0;
+    }
+}
+
+/* 인터랙션 가이드 스타일 - 명함 바깥으로 이동 */
+.interaction-guide {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #2c3e50;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: opacity 0.3s ease-out;
+}
+
+.guide-item {
+    margin: 3px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+/* 점프 발자국 컨테이너 */
+.footprint.jump {
+    width: 60px;
+    height: 38px;
+    position: absolute;
+    pointer-events: none;
+    z-index: 4;
+    opacity: 0;
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+/* 개별 발자국 스타일 */
+.footprint.jump .foot {
+    position: absolute;
+    width: 28px;
+    height: 38px;
+    background: radial-gradient(ellipse 60% 80% at 50% 40%, 
+        rgba(90, 115, 140, 0.5) 0%, 
+        rgba(75, 100, 125, 0.4) 40%, 
+        rgba(60, 85, 110, 0.25) 70%, 
+        transparent 100%);
+    border-radius: 45% 45% 50% 50%;
+    box-shadow: 
+        inset 2px 3px 6px rgba(50, 75, 100, 0.3),
+        inset -1px -2px 4px rgba(200, 220, 240, 0.5),
+        0 3px 10px rgba(0, 20, 40, 0.25);
+}
+
+.footprint.jump .foot.left {
+    left: 0;
+    transform: rotate(-5deg);
+}
+
+.footprint.jump .foot.right {
+    right: 0;
+    transform: rotate(5deg);
+}
+
+.footprint.jump .foot::before {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 18px;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse 70% 80% at 50% 50%, 
+        rgba(65, 90, 115, 0.4) 0%, 
+        rgba(50, 75, 100, 0.3) 60%, 
+        transparent 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    box-shadow: 
+        inset 1px 1px 3px rgba(40, 65, 90, 0.3),
+        inset -1px -1px 2px rgba(180, 200, 220, 0.4);
+}
+
+.footprint.jump .foot::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 6px;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse 80% 70% at 50% 50%, 
+        rgba(70, 95, 120, 0.35) 0%, 
+        rgba(55, 80, 105, 0.2) 50%, 
+        transparent 100%);
+    border-radius: 50%;
+    box-shadow: 
+        inset 1px 1px 2px rgba(45, 70, 95, 0.25),
+        inset -1px -1px 1px rgba(190, 210, 230, 0.35);
+}
+
+/* 달리기 발자국 스타일 (더 크고 기울어진) - 더 자연스러운 색상 */
+.footprint.run {
+    width: 28px;
+    height: 38px;
+    background: radial-gradient(ellipse 60% 80% at 50% 40%, 
+        rgba(95, 120, 145, 0.6) 0%, 
+        rgba(80, 105, 130, 0.45) 40%, 
+        rgba(65, 90, 115, 0.3) 70%, 
+        transparent 100%);
+    border-radius: 45% 45% 50% 50%;
+    box-shadow: 
+        inset 2px 3px 8px rgba(55, 75, 100, 0.4),
+        inset -1px -2px 5px rgba(210, 230, 250, 0.6),
+        0 4px 12px rgba(0, 20, 40, 0.3);
+    transform: translate(-50%, -50%) rotate(var(--rotation, 0deg)) skewX(-8deg);
+}
+
+.footprint.run::before {
+    width: 14px;
+    height: 18px;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse 70% 80% at 50% 50%, 
+        rgba(75, 100, 125, 0.5) 0%, 
+        rgba(60, 85, 110, 0.35) 60%, 
+        transparent 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    box-shadow: 
+        inset 1px 1px 4px rgba(45, 65, 90, 0.4),
+        inset -1px -1px 3px rgba(190, 210, 230, 0.5);
+}
+
+.footprint.run::after {
+    width: 10px;
+    height: 6px;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse 80% 70% at 50% 50%, 
+        rgba(80, 105, 130, 0.4) 0%, 
+        rgba(65, 90, 115, 0.25) 50%, 
+        transparent 100%);
+    border-radius: 50%;
+    box-shadow: 
+        inset 1px 1px 3px rgba(50, 75, 100, 0.3),
+        inset -1px -1px 2px rgba(200, 220, 240, 0.4);
+}
+
+/* 썰매 자국 스타일 - 더 자연스러운 색상과 그라데이션 */
+.sled-track {
+    position: absolute;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(70, 95, 120, 0.25) 5%, 
+        rgba(85, 110, 135, 0.35) 15%, 
+        rgba(95, 120, 145, 0.45) 25%, 
+        rgba(100, 125, 150, 0.5) 35%, 
+        rgba(105, 130, 155, 0.55) 50%, 
+        rgba(100, 125, 150, 0.5) 65%, 
+        rgba(95, 120, 145, 0.45) 75%, 
+        rgba(85, 110, 135, 0.35) 85%, 
+        rgba(70, 95, 120, 0.25) 95%, 
+        transparent 100%);
+    height: 12px;
+    border-radius: 6px;
+    box-shadow: 
+        inset 0 3px 6px rgba(45, 70, 95, 0.3),
+        inset 0 -2px 4px rgba(200, 220, 240, 0.5),
+        0 3px 12px rgba(0, 20, 40, 0.25);
+    z-index: 2;
+    opacity: 1;
+    transform-origin: left center;
+}
+
+.sled-track::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(55, 80, 105, 0.3) 15%, 
+        rgba(70, 95, 120, 0.4) 35%, 
+        rgba(80, 105, 130, 0.5) 50%, 
+        rgba(70, 95, 120, 0.4) 65%, 
+        rgba(55, 80, 105, 0.3) 85%, 
+        transparent 100%);
+    border-radius: 3px;
+}
+
+
+
+/* 점프 발자국 애니메이션 */
+@keyframes jumpLand {
+    0% {
+        transform: translate(-50%, -50%) rotate(var(--rotation, 0deg)) scale(1);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(var(--rotation, 0deg)) scale(1);
+        opacity: 1;
+    }
+}
+
+.footprint.jump.visible {
+    opacity: 1;
+    animation: jumpLand 0.2s ease-out;
+}
+
+.footprint.jump.fading {
+    opacity: 0;
+    transition: opacity 1.5s ease-out;
+}
+
+/* 달리기 발자국 애니메이션 */
+@keyframes runStep {
+    0% {
+        transform: translate(-50%, -50%) rotate(var(--rotation, 0deg)) skewX(-8deg) scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(var(--rotation, 0deg)) skewX(-8deg) scale(1);
+        opacity: 1;
+    }
+}
+
+.footprint.run.visible {
+    animation: runStep 0.25s ease-out;
+}
+
+/* 썰매 자국 사라지는 애니메이션 */
+.sled-track.fading {
+    opacity: 0;
+    transition: opacity 2s ease-out;
+} 
