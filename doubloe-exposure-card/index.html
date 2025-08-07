@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Double Exposure - 농구선수 & 도시</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- 로딩 화면 -->
+      <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+          <div class="loading-spinner"></div>
+          <div class="loading-text">이중 노출 효과를 생성하는 중...</div>
+        </div>
+      </div>
+
+      <div class="exposure-container">
+        <!-- 이중 노출 이미지가 그려질 캔버스 -->
+        <canvas id="exposureCanvas" class="exposure-canvas"></canvas>
+
+        <!-- 캔버스 레이어 텍스트 (뒷장) -->
+        <div class="canvas-text">
+          <div class="canvas-tagline">#13 The Beard</div>
+          <div class="canvas-name-container">
+            <div class="canvas-name-first">Brooklyn</div>
+            <div class="canvas-name-last">Nets</div>
+          </div>
+          <div class="canvas-stats">
+            <div class="stat-item">3x Scoring Champion</div>
+            <div class="stat-item">10x All-Star</div>
+            <div class="stat-item">MVP 2018</div>
+          </div>
+        </div>
+
+        <!-- 확장 시 추가 정보 (왼쪽) -->
+        <div class="left-panel">
+          <div class="panel-section">
+            <div class="stat-grid">
+              <div class="stat-box">
+                <div class="stat-number">25.2</div>
+                <div class="stat-label">PPG</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-number">6.3</div>
+                <div class="stat-label">APG</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-number">5.4</div>
+                <div class="stat-label">RPG</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-number">36.1</div>
+                <div class="stat-label">3P%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <div class="awards-list">
+              <div class="award-item">NBA MVP (2018)</div>
+              <div class="award-item">3x Scoring Champion</div>
+              <div class="award-item">10x All-Star</div>
+              <div class="award-item">7x All-NBA Team</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 확장 시 추가 정보 (오른쪽) -->
+        <div class="right-panel">
+          <div class="panel-section">
+            <div class="news-list">
+              <div class="news-item">
+                <div class="news-date">2024</div>
+                <div class="news-title">Joins LA Clippers</div>
+                <div class="news-desc">
+                  Traded to Clippers, forms Big 4 with Kawhi, PG, Westbrook
+                </div>
+              </div>
+              <div class="news-item">
+                <div class="news-date">2023</div>
+                <div class="news-title">Philadelphia Era</div>
+                <div class="news-desc">
+                  Led Sixers to playoffs, averaged 21.0 PPG
+                </div>
+              </div>
+              <div class="news-item">
+                <div class="news-date">2021</div>
+                <div class="news-title">Brooklyn Nets</div>
+                <div class="news-desc">Formed superteam with KD and Kyrie</div>
+              </div>
+              <div class="news-item">
+                <div class="news-date">2024</div>
+                <div class="news-title">Joins LA Clippers</div>
+                <div class="news-desc">
+                  Traded to Clippers, forms Big 4 with Kawhi, PG, Westbrook
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 상단 레이어 (농구선수) -->
+        <div class="top-layer" id="topLayer">
+          <img src="player.png" alt="농구선수" class="player-image" />
+
+          <!-- 명함 텍스트 -->
+          <div class="card-text">
+            <div class="name-first">James</div>
+            <div class="name-last">Harden</div>
+            <div class="tagline">Fear the Beard</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 스크롤 힌트 -->
+      <div class="scroll-hint">
+        <div class="hint-text">
+          스크롤하거나 드래그하여 이중 노출을 확인하세요
+        </div>
+        <div class="scroll-indicator">↓</div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

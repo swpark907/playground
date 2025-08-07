@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seoul 소개 명함</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="card-container">
+        <div class="business-card">
+            <div class="sliding-background">
+                <div class="slide-track" id="slideTrack">
+                    <!-- JavaScript로 이미지들이 동적으로 추가됩니다 -->
+                </div>
+            </div>
+            
+            <!-- 3D 텍스트 컨테이너 -->
+            <div class="text-3d-container">
+                <div class="text-item active" data-index="0">
+                    <h1>SEOUL</h1>
+                    <p>대한민국의 수도</p>
+                </div>
+                <div class="text-item" data-index="1">
+                    <h1>SMART</h1>
+                    <p>혁신적인 스마트 시티</p>
+                </div>
+                <div class="text-item" data-index="2">
+                    <h1>DYNAMIC</h1>
+                    <p>역동적인 에너지의 도시</p>
+                </div>
+                <div class="text-item" data-index="3">
+                    <h1>TRADITION</h1>
+                    <p>5천년 역사의 전통</p>
+                </div>
+                <div class="text-item" data-index="4">
+                    <h1>FUTURE</h1>
+                    <p>미래를 향한 꿈의 도시</p>
+                </div>
+            </div>
+            
+            <!-- 완성된 명함 레이아웃 -->
+            <div class="final-business-card">
+                <!-- 상단 주소 정보 -->
+                <div class="card-top">
+                    <div class="address-line">
+                        <span class="address-text">Seoul Tourism Center, 40 Cheonggyecheon-ro, Jung-gu, Seoul, Korea</span>
+                    </div>
+                </div>
+                
+                <!-- 중앙 경계선 -->
+                <div class="card-center"></div>
+                
+                <div class="card-left">
+                    <div class="main-title">SEOUL</div>
+                    <div class="subtitle">TOURISM CENTER</div>
+                </div>
+                
+                <div class="card-right">
+                    <div class="contact-item">
+                        <span class="contact-text">+82 2 778 0333</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-text">info@visitseoul.net</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-text">visitseoul.net</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-text">@SeoulOfficial</span>
+                    </div>
+                </div>
+                
+                <!-- 배치될 키워드들 -->
+                <div class="floating-keywords">
+                    <div class="keyword" data-word="SMART">SMART</div>
+                    <div class="keyword" data-word="DYNAMIC">DYNAMIC</div>
+                    <div class="keyword" data-word="TRADITION">TRADITION</div>
+                    <div class="keyword" data-word="FUTURE">FUTURE</div>
+                </div>
+            </div>
+            
+            <!-- 스크롤 힌트 -->
+            <div class="scroll-hint">
+                <span>스크롤해서 서울로 여행하세요</span>
+                <div class="scroll-arrow">↓</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 추가 컨텐츠 영역 (스크롤을 위한 높이 확보) -->
+    <div class="content-spacer"></div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 

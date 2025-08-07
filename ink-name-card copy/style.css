@@ -175,9 +175,4 @@ html {
   transform: scale(1.02);
 }
 
-/* 사용하지 않는 기존 스타일들 제거 */
-.content-container,
-.text-container,
-.char-wrapper {
-  display: none;
-}
+

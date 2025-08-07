@@ -1,0 +1,255 @@
+:root {
+    /* 명함 크기 설정 */
+    --card-width: 600px;
+    --card-height: 400px;
+    --card-border-radius: 15px;
+    
+    /* 명함 색상 설정 */
+    --card-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    --card-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    
+    /* 그리드 설정 */
+    --grid-cols: 16;
+    --grid-rows: 10;
+    
+    /* 애니메이션 설정 */
+    --scatter-range: 0.3; /* 화면 대비 흩어지는 범위 (0.3 = 30%) */
+    --scatter-duration: 800ms;
+    --gather-duration: 1000ms;
+    --float-range: 30px;
+    
+    /* 배경 색상 */
+    --bg-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-gradient);
+    font-family: 'Arial', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 10px rgba(255,255,255,0.1); }
+    to { text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.3); }
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+    perspective: 1000px;
+    position: relative;
+}
+
+.business-card {
+    width: var(--card-width);
+    height: var(--card-height);
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    background: var(--card-gradient);
+    transition: opacity 0.3s ease;
+}
+
+/* 투명한 호버 오버레이 */
+.hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--card-width);
+    height: var(--card-height);
+    background: transparent;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: var(--card-border-radius);
+}
+
+/* 호버 시 원본 명함 숨기기 */
+.business-card.scattered {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* 흩어진 조각들의 포인터 이벤트 차단 */
+.card-piece.scattered {
+    pointer-events: none;
+}
+
+/* 명함 컨텐츠 스타일링 - 자유롭게 수정하세요! */
+.card-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    width: 90%;
+    z-index: 2;
+}
+
+.card-name {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    letter-spacing: 2px;
+}
+
+.card-title {
+    font-size: 16px;
+    margin-bottom: 20px;
+    opacity: 0.9;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.card-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 12px;
+    opacity: 0.8;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.contact-icon {
+    font-size: 14px;
+}
+
+.contact-text {
+    font-weight: 500;
+}
+
+/* 조각 스타일 */
+.card-piece {
+    position: absolute;
+    border: 0.5px solid rgba(255,255,255,0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+    
+    /* 전체 명함 크기의 그라데이션을 각 조각 위치에 맞춰 표시 */
+    background: var(--card-gradient);
+    background-size: var(--card-width) var(--card-height); /* 전체 명함 크기 */
+    background-position: var(--bg-offset-x, 0) var(--bg-offset-y, 0); /* 각 조각 위치에 맞는 오프셋 */
+}
+
+/* 커스터마이징 컨트롤 패널 */
+.controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.8);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    font-size: 12px;
+    max-width: 250px;
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.controls h3 {
+    margin-bottom: 15px;
+    color: #f093fb;
+}
+
+.control-group {
+    margin-bottom: 15px;
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.control-group input {
+    width: 100%;
+    padding: 5px 8px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    font-size: 11px;
+}
+
+.control-group input[type="range"] {
+    margin: 5px 0;
+}
+
+.control-group .range-value {
+    color: #f093fb;
+    font-weight: bold;
+}
+
+/* 호버 효과 */
+.hover-overlay:hover ~ .business-card .card-piece {
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* 애니메이션 효과 */
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotateX(0deg); }
+    50% { transform: translateY(-10px) rotateX(5deg); }
+}
+
+.container {
+    animation: float 4s ease-in-out infinite;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .controls {
+        display: none; /* 모바일에서는 컨트롤 패널 숨김 */
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    .card-name {
+        font-size: 20px;
+    }
+    
+    .card-title {
+        font-size: 14px;
+    }
+    
+    .contact-item {
+        font-size: 10px;
+    }
+} 

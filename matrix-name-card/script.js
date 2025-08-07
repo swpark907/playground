@@ -32,31 +32,37 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
         ctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
         
-        for (let i = 0; i < drops.length; i++) {
-            // 랜덤 문자 생성 (0과 1)
-            const text = Math.random() > 0.5 ? '0' : '1';
-            
-            // 랜덤한 색상 변화 추가
-            const colorIndex = Math.floor(Math.random() * colorVariations.length);
-            ctx.fillStyle = colorVariations[colorIndex];
-            ctx.font = '15px monospace';
-            
-            // 특별히 밝은 문자를 가끔 추가 (글로우 효과)
-            if (Math.random() > 0.99) {
-                ctx.fillStyle = '#FFFFFF';
-                ctx.font = 'bold 16px monospace';
-            }
-            
-            ctx.fillText(text, i * 20, drops[i] * 20);
-            
-            // 일정 확률로 지워지거나 초기화
-            if (drops[i] * 20 > matrixCanvas.height && Math.random() > 0.975) {
-                drops[i] = 0;
-            }
-            
-            // 각 열마다 다른 속도로 떨어짐
-            drops[i] += dropSpeed[i];
-        }
+        const matrixChars = (
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+            'abcdefghijklmnopqrstuvwxyz' +
+            '0123456789' +
+            'αβγδεζηθλμνξοπρστυφχψω' +
+            'ΔΩ∑∏∫√∞≠≈≡∇' +
+            'ЖБДЯФИ' +
+            '@#$%^&*()[]{}|<>~±×÷' +
+            '©®™✓✕★☆◉◎●◌◻︎▣▤▥'
+          ).split('');
+          
+          for (let i = 0; i < drops.length; i++) {
+              const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+          
+              ctx.fillStyle = colorVariations[Math.floor(Math.random() * colorVariations.length)];
+              ctx.font = '15px monospace';
+          
+              if (Math.random() > 0.99) {
+                  ctx.fillStyle = '#FFFFFF';
+                  ctx.font = 'bold 16px monospace';
+              }
+          
+              ctx.fillText(text, i * 20, drops[i] * 20);
+          
+              if (drops[i] * 20 > matrixCanvas.height && Math.random() > 0.975) {
+                  drops[i] = 0;
+              }
+          
+              drops[i] += dropSpeed[i];
+          }
+          
     }
     
     // 애니메이션 상태 관리
@@ -67,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 모든 텍스트 요소를 가져옴
     function getAllTextNodes() {
         const elements = [
-            ...document.querySelectorAll('.name, .role, .detail-label, .detail-value, .card-footer')
+            ...document.querySelectorAll('.company-name, .company-logo, .name, .role, .contact-item')
         ];
         
         const nodes = [];
@@ -207,47 +213,70 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, Math.random() * 1200);
             });
             
-            // 3.5초 후 두 번째 변환 준비
+            // 3초 후 자동으로 스크램블 시작
+            setTimeout(() => {
+                // 두 번째 변환: 이진수 효과
+                const textNodes = document.querySelectorAll('.character');
+                const totalNodes = textNodes.length;
+                
+                // 글자 하나씩 이진수로 변환, 단계적으로 파급
+                let processedCount = 0;
+                textNodes.forEach((node, index) => {
+                    setTimeout(() => {
+                        binaryTransform(node);
+                        
+                        processedCount++;
+                        // 마지막 노드 변환 후 애니메이션 상태를 끝내지만 초기화하지 않음
+                        if (processedCount >= totalNodes - 5) {
+                            setTimeout(() => {
+                                isAnimating = false;
+                            }, 1000);
+                        }
+                    }, index * 35 + Math.random() * 50); // 더 자연스러운 시간차
+                });
+                
+                // 글리치 효과 추가
+                addGlitchEffect();
+                
+                // stateCounter를 2로 설정 (다음 클릭은 복원)
+                stateCounter = 2;
+            }, 3000);
+            
+            // 애니메이션 상태 해제
             setTimeout(() => {
                 isAnimating = false;
             }, 3500);
         } else if (stateCounter === 2) {
-            // 두 번째 변환: 이진수 효과
-            const textNodes = document.querySelectorAll('.character');
-            const totalNodes = textNodes.length;
-            
-            // 글자 하나씩 이진수로 변환, 단계적으로 파급
-            let processedCount = 0;
-            textNodes.forEach((node, index) => {
-                setTimeout(() => {
-                    binaryTransform(node);
-                    
-                    processedCount++;
-                    // 마지막 노드 변환 후 애니메이션 상태를 끝내지만 초기화하지 않음
-                    if (processedCount >= totalNodes - 5) {
-                        setTimeout(() => {
-                            isAnimating = false;
-                        }, 1000);
-                    }
-                }, index * 35 + Math.random() * 50); // 더 자연스러운 시간차
-            });
-            
-            // 글리치 효과 추가
-            addGlitchEffect();
-        } else if (stateCounter === 3) {
             // 세 번째 클릭: 초기 상태로 복원
             stateCounter = 0;
             matrixCanvas.classList.remove('active');
             clearInterval(matrixInterval);
             
-            // 페이드 아웃 효과
-            document.body.style.transition = 'opacity 1s ease';
-            document.body.style.opacity = '0';
+            // 모든 문자를 원래 상태로 복원
+            const textNodes = document.querySelectorAll('.character');
+            textNodes.forEach((node, index) => {
+                setTimeout(() => {
+                    const originalChar = node.getAttribute('data-original-char') || node.textContent;
+                    const originalDataText = node.getAttribute('data-original-data-text') || originalChar;
+                    
+                    node.textContent = originalChar;
+                    node.setAttribute('data-text', originalDataText);
+                    node.style.color = '';
+                    node.style.textShadow = '';
+                    node.style.transition = 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    
+                    // 복원 후 특별 효과
+                    node.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        node.style.transform = 'scale(1)';
+                    }, 120);
+                }, index * 50); // 순차적으로 복원
+            });
             
-            // 페이지 새로고침
+            // 복원 완료 후 애니메이션 상태 해제
             setTimeout(() => {
-                location.reload();
-            }, 1000);
+                isAnimating = false;
+            }, textNodes.length * 50 + 1000);
         }
     });
     
@@ -262,40 +291,49 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 이진수 변환 함수
     function binaryTransform(element) {
-        let count = 0;
-        const maxCount = 10 + Math.floor(Math.random() * 5); // 10~14회 깜박임
         const originalChar = element.textContent;
+        const originalDataText = element.getAttribute('data-text');
         
         // 초기 상태 설정
         element.style.transition = 'all 0.15s ease';
         
-        const interval = setInterval(() => {
-            if (count >= maxCount) {
-                clearInterval(interval);
-                element.innerHTML = '<span class="binary">' + (Math.random() > 0.5 ? '0' : '1') + '</span>';
-                // 변환 완료 후 특별 효과
-                element.style.transform = 'scale(1.05)';
-                setTimeout(() => {
-                    element.style.transform = 'scale(1)';
-                }, 120);
-                return;
+        // 지속적으로 랜덤 문자 생성하는 함수
+        function scrambleText() {
+            let scrambledChar;
+            
+            // 50% 확률로 원래 글자 유지, 50% 확률로 랜덤 문자 생성
+            if (Math.random() < 0.5) {
+                // CharCode를 사용해서 랜덤 문자 생성 (ASCII 33-126 범위)
+                scrambledChar = String.fromCharCode(Math.random() * 94 + 33);
+            } else {
+                // 원래 글자 유지
+                scrambledChar = originalChar;
             }
             
-            // 0과 1 사이를 빠르게 전환, 때때로 다른 문자도 추가
-            if (count % 3 === 0) {
-                element.textContent = '0';
-            } else if (count % 3 === 1) {
-                element.textContent = '1';
-            } else {
-                element.textContent = Math.random() > 0.8 ? 'x' : (Math.random() > 0.5 ? '0' : '1');
-            }
+            element.textContent = scrambledChar;
+            element.setAttribute('data-text', scrambledChar);
             
             // 색상 변화 추가
             const greenIntensity = 150 + Math.floor(Math.random() * 105);
             element.style.color = `rgb(0, ${greenIntensity}, 0)`;
             element.style.textShadow = `0 0 ${Math.random() * 5 + 3}px rgba(0, 255, 0, 0.7)`;
-            count++;
-        }, 80 + Math.random() * 40); // 깜박임 속도에 변화 추가
+            
+            // 가끔 밝은 글로우 효과
+            if (Math.random() > 0.8) {
+                element.style.color = '#FFFFFF';
+                element.style.textShadow = `0 0 8px rgba(255, 255, 255, 0.8), 0 0 12px rgba(0, 255, 0, 0.6)`;
+            }
+        }
+        
+        // 즉시 첫 번째 스크램블 실행
+        scrambleText();
+        
+        // 지속적으로 스크램블 실행 (50ms 간격) - 계속 유지
+        setInterval(scrambleText, 200);
+        
+        // 원래 문자 정보를 element에 저장 (나중에 복원할 때 사용)
+        element.setAttribute('data-original-char', originalChar);
+        element.setAttribute('data-original-data-text', originalDataText);
     }
     
     // 글리치 효과 추가

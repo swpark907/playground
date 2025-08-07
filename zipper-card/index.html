@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LUCID COUTURE - Eloise Moreau 패션 디자이너 인터랙티브 명함" />
+  <title>Zipper Business Card - LUCID COUTURE</title>
+  
+  <!-- CSS 파일 링크 -->
+  <link rel="stylesheet" href="style.css" />
+  
+  <!-- 파비콘 -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='24' font-size='24'>🧵</text></svg>" />
+</head>
+<body>
+  <div class="card-container">
+    <!-- 메인 카드 -->
+    <div class="business-card" id="businessCard">
+      
+      <!-- 왼쪽 명함 정보 영역 -->
+      <div class="card-info" id="cardInfo">
+        <h1 class="brand-logo">LUCID<br>COUTURE</h1>
+        <div class="designer-info">
+          <h2 class="designer-name">Eloise<br>Moreau</h2>
+          <div class="contact-info">
+            <h3>123 Rue Saint-Honoré<br>Paris, France</h3>
+            <h3>+33 1 23 45 67 99</h3>
+            <h3>eloise@lucidcouture.com</h3>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 중앙 지퍼 영역 -->
+      <div class="zipper-area">
+        <!-- 지퍼 핸들 -->
+        <div class="zipper-handle" id="zipperHandle"
+             role="button" 
+             tabindex="0"
+             aria-label="지퍼를 드래그하거나 클릭하여 명함을 열어보세요"
+             aria-expanded="false">
+          <div class="handle-body"></div>
+          <div class="handle-icon">⇣</div>
+        </div>
+      </div>
+      
+      <!-- 오른쪽 확장 영역 (처음엔 숨겨짐) -->
+      <div class="expandable-content" id="expandableContent">
+        <div class="content-placeholder">
+          <!-- 지퍼가 닫혀있을 때 보이는 패턴이나 로고 -->
+          <div class="pattern-overlay">
+            <div class="logo-overlay">
+              <h1 class="brand-logo">LC</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+    <!-- 지퍼가 열렸을 때 드러나는 아티클 영역 -->
+    <div class="article-panel" id="articlePanel" role="region" aria-labelledby="article-header">
+      <div class="article-header">
+        <h3 id="article-header">Recent Projects</h3>
+      </div>
+      
+      <div class="article-scroll-container" id="articleScrollContainer" 
+           role="list" aria-label="프로젝트 목록">
+        <article class="article-item" role="listitem">
+          <div class="article-image">
+            <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=180&q=80" 
+                 alt="Evening Elegance Collection" loading="lazy" />
+          </div>
+          <div class="article-content">
+            <h4>Evening Elegance<br>Reinventing the Little Black Dress</h4>
+            <p class="article-date">March 15, 2024</p>
+          </div>
+        </article>
+        
+        <article class="article-item" role="listitem">
+          <div class="article-image">
+            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=180&q=80" 
+                 alt="Luxury Redefined Collection" loading="lazy" />
+          </div>
+          <div class="article-content">
+            <h4>Luxury Redefined:<br>A Fusion of Tradition and Hernity</h4>
+            <p class="article-date">March 10, 2024</p>
+          </div>
+        </article>
+        
+        <article class="article-item" role="listitem">
+          <div class="article-image">
+            <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=180&q=80" 
+                 alt="Avant-Garde Spring Collection" loading="lazy" />
+          </div>
+          <div class="article-content">
+            <h4>Avant-Garde Spring:<br>Breaking Fashion Boundaries</h4>
+            <p class="article-date">February 28, 2024</p>
+          </div>
+        </article>
+        
+        <article class="article-item" role="listitem">
+          <div class="article-image">
+            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=180&q=80" 
+                 alt="Sustainable Fashion Initiative" loading="lazy" />
+          </div>
+          <div class="article-content">
+            <h4>Sustainable Couture:<br>Eco-Luxury for Modern Living</h4>
+            <p class="article-date">February 20, 2024</p>
+          </div>
+        </article>
+        
+        <article class="article-item" role="listitem">
+          <div class="article-image">
+            <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=180&q=80" 
+                 alt="Paris Fashion Week Highlights" loading="lazy" />
+          </div>
+          <div class="article-content">
+            <h4>Paris Fashion Week:<br>A Journey Through Innovation</h4>
+            <p class="article-date">February 15, 2024</p>
+          </div>
+        </article>
+      </div>
+    </div>
+    
+  </div>
+  
+  <!-- JavaScript 파일 링크 -->
+  <script src="script.js"></script>
+  
+  <!-- 접근성 -->
+  <div class="sr-only" aria-live="polite" id="statusAnnouncement"></div>
+  
+  <!-- 상태 알림 -->
+</body>
+</html>

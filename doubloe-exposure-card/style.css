@@ -1,0 +1,437 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background: #525252;
+  color: #fff;
+  overflow-x: hidden;
+  height: 300vh; /* 확장 효과를 위한 더 긴 스크롤 */
+}
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.exposure-container {
+  position: relative;
+  width: 500px;
+  height: 890px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin: 0 auto;
+  transition: width 0.3s ease, height 0.3s ease;
+  background: #000;
+  border-radius: 10px;
+}
+
+.exposure-canvas {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.5s ease, filter 0.5s ease;
+  background: #000; /* 캔버스 배경을 검정색으로 */
+}
+
+.top-layer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+  background: white; /* 배경을 흰색으로 설정 */
+  mix-blend-mode: normal; /* 일반 블렌드 모드 사용 */
+}
+
+.player-image {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  filter: grayscale(1) contrast(1.2); /* 흑백 변환만 적용 */
+  opacity: 1;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  mix-blend-mode: normal; /* 일반 블렌드 모드 사용 */
+}
+
+/* 명함 텍스트 스타일 */
+.card-text {
+  color: #000;
+  font-family: "Bebas Neue", sans-serif;
+  z-index: 10;
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  margin-top: 120px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.name-first {
+  font-size: 40px;
+  font-weight: bold;
+  color: #000;
+  line-height: 0;
+}
+
+.name-last {
+  font-size: 90px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #000;
+}
+
+.tagline {
+  font-size: 30px;
+  font-family: "Montserrat", sans-serif;
+  font-style: italic;
+  margin-bottom: 20px;
+  color: #666;
+  font-weight: 600;
+}
+
+/* 캔버스 레이어 텍스트 스타일 (뒷장) */
+.canvas-text {
+  color: #fff;
+  font-family: "Bebas Neue", sans-serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  text-align: center;
+  width: 1500px;
+  height: 100%;
+  margin-top: 120px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 1; /* 항상 보이도록 */
+  display: flex;
+  justify-content: space-between;
+  z-index: 1;
+  padding: 0 180px;
+}
+
+.canvas-name-first {
+  font-size: 40px;
+  font-weight: bold;
+  color: #fff;
+  line-height: 0;
+}
+
+.canvas-name-last {
+  font-size: 90px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.canvas-tagline {
+  font-size: 30px;
+  font-family: "Montserrat", sans-serif;
+  font-style: italic;
+  margin-bottom: 20px;
+  color: #ccc;
+  font-weight: 600;
+}
+
+.canvas-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.stat-item {
+  font-size: 14px;
+  color: #fff;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* 확장 패널 스타일 */
+.left-panel,
+.right-panel {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 300px;
+  max-height: 400px;
+  padding: 30px 20px;
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 3;
+  
+}
+
+.left-panel {
+  left: 110px;
+  text-align: right;
+  top: 50%; /* 중앙 텍스트 아래로 이동 */
+}
+
+.right-panel {
+  right: 110px;
+  text-align: left;
+  top: 50%; /* 중앙 텍스트 아래로 이동 */
+}
+
+.panel-section {
+  margin-bottom: 25px;
+}
+
+.panel-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #fff;
+  border-bottom: 2px solid #fff;
+  padding-bottom: 8px;
+}
+
+/* 통계 그리드 */
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-box {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.stat-number {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #ccc;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* 수상 목록 */
+.awards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.award-item {
+  font-size: 14px;
+  color: #fff;
+  padding: 8px 0;
+  padding-left: 15px;
+  text-align: center;
+}
+
+/* 뉴스 목록 */
+.news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.news-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+.news-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.news-date {
+  font-size: 12px;
+  color: #ccc;
+  margin-bottom: 5px;
+}
+
+.news-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.news-desc {
+  font-size: 12px;
+  color: #ccc;
+  line-height: 1.4;
+}
+
+/* 시그니처 무브 */
+.moves-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.move-item {
+  font-size: 14px;
+  color: #fff;
+  padding: 8px 0;
+  border-left: 3px solid #fff;
+  padding-left: 15px;
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.contact-item {
+  font-size: 12px;
+  color: #444;
+  font-weight: 500;
+}
+
+.scroll-hint {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 20;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.hint-text {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.scroll-indicator {
+  font-size: 24px;
+  animation: bounce 2s infinite;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* 스크롤 시 힌트 숨김 */
+.scroll-hint.fade-out {
+  opacity: 0;
+}
+
+/* 로딩 화면 */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  transition: opacity 0.5s ease;
+}
+
+.loading-screen.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-content {
+  text-align: center;
+  color: #fff;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+.loading-text {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .exposure-container {
+    width: 90vw;
+    height: 160vw; /* 세로 비율 유지 */
+  }
+
+  .player-image,
+  .exposure-canvas {
+    max-width: 95%;
+    max-height: 95%;
+  }
+
+  .hint-text {
+    font-size: 12px;
+  }
+
+  .loading-text {
+    font-size: 14px;
+  }
+}

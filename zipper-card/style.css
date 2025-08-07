@@ -1,0 +1,395 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #0a0f1c 0%, #1a2332 50%, #0f1419 100%);
+  color: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.card-container {
+  display: flex;
+  align-items: stretch;
+  background: #1a2332;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  position: relative;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 메인 비즈니스 카드 */
+.business-card {
+  display: flex;
+  height: 600px;
+  position: relative;
+  z-index: 2;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 왼쪽 명함 정보 영역 */
+.card-info {
+  width: 280px;
+  padding: 60px 40px;
+  background: linear-gradient(135deg, #1a2332 0%, #2a3441 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.brand-logo {
+  font-size: 32px;
+  font-weight: 900;
+  color: #ccff00;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 20px rgba(204, 255, 0, 0.3);
+}
+
+.designer-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.designer-name {
+  font-size: 28px;
+  color: #ffffff;
+  margin-bottom: 40px;
+}
+
+.contact-info {
+  font-size: 14px;
+  color: #aaaaaa;
+  line-height: 1.6;
+}
+
+.contact-info h3 {
+  margin-bottom: 6px;
+}
+
+/* 중앙 지퍼 영역 */
+.zipper-area {
+  width: 120px;
+  height: 600px;
+  position: relative;
+  background: linear-gradient(to bottom, #ccff00 0%, #ccff00 100%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* 지퍼 핸들 */
+.zipper-handle {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  cursor: grab;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.zipper-handle:active {
+  cursor: grabbing;
+}
+
+.handle-body {
+  width: 60px;
+  height: 40px;
+  background: linear-gradient(145deg, #1a1a1a, #000000);
+  border-radius: 20px;
+  border: 3px solid #333333;
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.6),
+    inset 0 2px 4px rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.handle-body::before {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #ccff00;
+  border-radius: 50%;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  box-shadow: 0 0 8px rgba(204, 255, 0, 0.6);
+}
+
+.handle-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ccff00;
+  font-size: 18px;
+  font-weight: bold;
+  text-shadow: 0 0 4px rgba(204, 255, 0, 0.8);
+  pointer-events: none;
+}
+
+/* 오른쪽 확장 영역 (닫힌 상태) */
+.expandable-content {
+  width: 0;
+  height: 600px;
+  background: #2a3441;
+  overflow: hidden;
+  transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+}
+
+.content-placeholder {
+  width: 280px;
+  height: 100%;
+  background: linear-gradient(135deg, #2a3441 0%, #1a2332 100%);
+  position: relative;
+}
+
+.pattern-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(204, 255, 0, 0.05) 0px,
+    rgba(204, 255, 0, 0.05) 2px,
+    transparent 2px,
+    transparent 20px
+  );
+}
+
+.pattern-overlay .logo-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+}
+
+.pattern-overlay .logo-overlay h1 {
+  letter-spacing: 5px;
+  font-size: 50px;
+}
+
+
+
+/* 아티클 패널 (지퍼가 열렸을 때 나타남) */
+.article-panel {
+  width: 0;
+  height: 600px;
+  background: #0f1419;
+  overflow: hidden;
+  transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  z-index: 1;
+}
+
+.article-header {
+  padding: 30px;
+  border-bottom: 1px solid rgba(204, 255, 0, 0.2);
+}
+
+.article-header h3 {
+  font-size: 18px;
+  color: #ccff00;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.article-scroll-container {
+  height: calc(600px - 90px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+}
+
+/* 커스텀 스크롤바 */
+.article-scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.article-scroll-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.article-scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(204, 255, 0, 0.6);
+  border-radius: 3px;
+}
+
+.article-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(204, 255, 0, 0.8);
+}
+
+/* 아티클 아이템 */
+.article-item {
+  display: flex;
+  padding: 20px 20px;
+  flex-direction: column;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 20px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.article-item:hover {
+  background: rgba(204, 255, 0, 0.05);
+}
+
+.article-image {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.article-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.article-item:hover .article-image img {
+  transform: scale(1.05);
+}
+
+.article-content {
+  flex-grow: 1;
+}
+
+.article-content h4 {
+  font-size: 14px;
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.article-date {
+  font-size: 12px;
+  color: #888888;
+  font-weight: 400;
+}
+
+/* 열린 상태 */
+.card-container.opened .expandable-content {
+  width: 280px;
+}
+
+.card-container.opened .article-panel {
+  width: 280px;
+}
+
+/* 지퍼 애니메이션 상태 */
+.zipper-handle.dragging {
+  transform: translateX(-50%) scale(1.1);
+  filter: brightness(1.2);
+}
+
+/* 접근성 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+  .card-container {
+    flex-direction: column;
+    height: 100vh;
+    border-radius: 0;
+  }
+  
+  .business-card {
+    height: auto;
+    flex-direction: column;
+  }
+  
+  .card-info {
+    width: 100%;
+    height: 200px;
+    padding: 30px 20px;
+  }
+  
+  .zipper-area {
+    width: 100%;
+    height: 80px;
+  }
+  
+  .brand-logo {
+    font-size: 24px;
+  }
+  
+  .designer-name {
+    font-size: 20px;
+  }
+  
+  .contact-info {
+    font-size: 12px;
+  }
+}
+
+/* 애니메이션 개선 */
+.card-container {
+  transform-style: preserve-3d;
+}
+
+.business-card {
+  transform-style: preserve-3d;
+}
+
+/* 호버 효과 */
+.zipper-handle:hover {
+  transform: translateX(-50%) translateY(-2px);
+}
+
+.zipper-handle:hover .handle-body {
+  box-shadow: 
+    0 12px 20px rgba(0, 0, 0, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2);
+}
+
+/* 디버그 정보 */
+.debug-info {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #ccff00;
+  padding: 10px;
+  border-radius: 5px;
+  font-family: monospace;
+  font-size: 12px;
+  z-index: 1000;
+  display: none;
+}
+
+.debug-info.show {
+  display: block;
+} 
