@@ -1,0 +1,625 @@
+:root {
+  /* 크기 변수 */
+  --dock-height: 72px;
+  --panel-width: 280px;
+
+  /* 색상 변수 */
+  --bg-primary: #0a0a0a;
+  --text-primary: #f2f2f2;
+  --text-secondary: #cccccc;
+  --text-accent: #ffffff;
+  --border-color: rgba(255, 255, 255, 0.15);
+  --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+/* ===== 차원 관문 스타일링 ===== */
+.dimension-gate {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #000 0%, #0a0a0a 50%, #000 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 1.5s ease-out;
+}
+
+.dimension-gate.fade-out {
+  opacity: 0;
+}
+
+.gate-content {
+  text-align: center;
+  position: relative;
+}
+
+.gate-text {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  animation: dimension-text 6s ease-in-out;
+  letter-spacing: 0.1em;
+}
+
+.gate-subtitle {
+  font-family: "NanumSquareNeo", sans-serif;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2rem;
+  animation: dimension-subtitle 6s ease-in-out;
+  font-weight: 300;
+}
+
+.gate-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: particle-float 8s ease-in-out infinite;
+}
+
+.particle-1 {
+  top: 20%;
+  left: 30%;
+  animation-delay: 0s;
+}
+
+.particle-2 {
+  top: 60%;
+  right: 25%;
+  animation-delay: 2s;
+}
+
+.particle-3 {
+  bottom: 30%;
+  left: 70%;
+  animation-delay: 4s;
+}
+
+/* 차원 텍스트 애니메이션 */
+@keyframes dimension-text {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+    filter: blur(5px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+  15% {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  25% {
+    text-shadow: 0 0 30px rgba(0, 255, 255, 0.4),
+      0 0 40px rgba(255, 0, 255, 0.2);
+  }
+  75% {
+    text-shadow: 0 0 30px rgba(0, 255, 255, 0.4),
+      0 0 40px rgba(255, 0, 255, 0.2);
+    transform: translateY(0) scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px) scale(1.05);
+    filter: blur(2px);
+  }
+}
+
+@keyframes dimension-subtitle {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes particle-float {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-20px) scale(1);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.panel-container {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 1820px; /* 기본값: 1550px */
+  height: 100%;
+  padding: 0 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+#app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: none; /* 관문이 사라진 후에만 표시 */
+  opacity: 0;
+}
+
+.header-text {
+  position: absolute;
+  bottom: 15%;
+  right: 18%;
+  font-size: 72px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  z-index: 9999;
+  letter-spacing: -2px;
+  /* 기본 텍스트 섀도우 효과 */
+  text-shadow:
+    0 0 3px rgba(255, 255, 255, 0.8),
+    0 0 7px rgba(255, 255, 255, 0.6),
+    0 0 10px rgba(0, 255, 255, 0.4),
+    0 0 12px rgba(255, 0, 255, 0.2);
+}
+
+/* ===== 패널 스타일링 ===== */
+/* 공통 패널 스타일 */
+
+.panel.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.panel-content {
+  padding: 20px;
+  color: var(--text-primary);
+  height: auto;
+  max-height: calc(100vh - 160px); /* 패딩 고려 */
+  overflow-y: auto;
+}
+
+/* 좌측 패널 - 컨텐츠 영역 중앙 정렬 */
+#leftPanel {
+  z-index: 30;
+  text-align: left;
+}
+
+#leftPanelContent {
+  /* 좌측 패널 특정 스타일 */
+}
+
+/* 우측 패널 - 컨텐츠 영역 중앙 정렬 */
+#rightPanel {
+  z-index: 30;
+}
+
+#rightPanelContent {
+  /* 우측 패널 특정 스타일 */
+  text-align: right;
+}
+
+/* ===== 스테이지 및 캔버스 ===== */
+#stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: var(--dock-height);
+}
+
+#imageCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#labelOverlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+}
+
+/* ===== 라벨 스타일링 ===== */
+.label-group {
+  pointer-events: auto;
+}
+
+.label-rect {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.9);
+  stroke-width: 1.75;
+}
+
+.label-line {
+  stroke: rgba(255, 255, 255, 0.9);
+  stroke-width: 1.25;
+  fill: none;
+}
+
+.label-text {
+  fill: var(--text-accent);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  user-select: none;
+}
+
+.label-hit {
+  fill: transparent;
+  pointer-events: all;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* ===== 도크 및 뷰 스타일링 ===== */
+/* 하단 도크 */
+#bottomDock {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  padding: 20px 16px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  z-index: 30;
+  min-height: 130px;
+}
+
+#bottomDockContent {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.4;
+  width: 100%;
+}
+
+#bottomDockContent .dock-view .detail-item{
+  justify-content: end;
+}
+
+#bottomDockContent .dock-view .detail-item .value{
+ flex: 0.6;
+}
+
+/* 공통 뷰 스타일링 */
+.dock-view,
+.panel-view {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.dock-view {
+  flex-direction: row;
+}
+
+.panel-view {
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dock-view[hidden],
+.panel-view[hidden] {
+  display: none !important;
+}
+
+/* 뷰 콘텐츠 스타일링 */
+.dock-view strong,
+.panel-view strong {
+  font-weight: 600;
+  color: var(--text-accent);
+}
+
+.dock-view span,
+.panel-view span {
+  display: block;
+  color: var(--text-secondary);
+}
+
+.panel-view strong {
+  margin-bottom: 8px;
+}
+
+/* ===== 매트릭스 텍스트 및 효과 ===== */
+.matrix-text {
+  color: var(--text-accent);
+  letter-spacing: 0.02em; /* 나눔 스퀘어에 맞게 조정 */
+  text-shadow: none;
+  transition: all 0.1s ease;
+}
+
+.matrix-text.scrambled {
+  letter-spacing: 0.08em; /* 스크램블 시 약간 더 넓게 */
+}
+
+/* 사이버펑크 글리치 애니메이션 */
+@keyframes cyber-glitch {
+  0%,
+  100% {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5),
+      0 0 10px rgba(255, 255, 255, 0.3);
+    transform: translateX(0);
+  }
+  10% {
+    text-shadow: -2px 0 0 rgba(255, 0, 0, 0.8), 2px 0 0 rgba(0, 255, 255, 0.8),
+      0 0 10px rgba(255, 255, 255, 0.5);
+    transform: translateX(-1px);
+  }
+  20% {
+    text-shadow: 2px 0 0 rgba(255, 0, 0, 0.8), -2px 0 0 rgba(0, 255, 255, 0.8),
+      0 0 15px rgba(255, 255, 255, 0.7);
+    transform: translateX(1px);
+  }
+  30% {
+    text-shadow: -1px 0 0 rgba(255, 0, 0, 0.6), 1px 0 0 rgba(0, 255, 255, 0.6),
+      0 0 8px rgba(255, 255, 255, 0.4);
+    transform: translateX(-0.5px);
+  }
+  40% {
+    text-shadow: 1px 0 0 rgba(255, 0, 0, 0.6), -1px 0 0 rgba(0, 255, 255, 0.6),
+      0 0 12px rgba(255, 255, 255, 0.6);
+    transform: translateX(0.5px);
+  }
+  50% {
+    text-shadow: -3px 0 0 rgba(255, 0, 0, 0.9), 3px 0 0 rgba(0, 255, 255, 0.9),
+      0 0 20px rgba(255, 255, 255, 0.8);
+    transform: translateX(-2px);
+  }
+  60% {
+    text-shadow: 3px 0 0 rgba(255, 0, 0, 0.9), -3px 0 0 rgba(0, 255, 255, 0.9),
+      0 0 15px rgba(255, 255, 255, 0.6);
+    transform: translateX(2px);
+  }
+  70% {
+    text-shadow: -2px 0 0 rgba(255, 0, 0, 0.7), 2px 0 0 rgba(0, 255, 255, 0.7),
+      0 0 10px rgba(255, 255, 255, 0.5);
+    transform: translateX(-1px);
+  }
+  80% {
+    text-shadow: 2px 0 0 rgba(255, 0, 0, 0.7), -2px 0 0 rgba(0, 255, 255, 0.7),
+      0 0 12px rgba(255, 255, 255, 0.6);
+    transform: translateX(1px);
+  }
+  90% {
+    text-shadow: -1px 0 0 rgba(255, 0, 0, 0.5), 1px 0 0 rgba(0, 255, 255, 0.5),
+      0 0 8px rgba(255, 255, 255, 0.4);
+    transform: translateX(-0.5px);
+  }
+}
+
+.matrix-text.glitch {
+  animation: cyber-glitch 0.3s ease-in-out;
+}
+
+/* ===== 콘텐츠 스타일링 ===== */
+.exhibition-header {
+  position: relative; /* 모바일 absolute 포지셔닝을 위한 기준점 */
+  width: 100%;
+  min-width: 280px;
+}
+.exhibition-header h1 {
+  margin: 0 0 8px 0;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.exhibition-content p {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.exhibition-content {
+  margin-bottom: 0;
+}
+
+/* exhibition-content 뒤에 또 다른 exhibition-content가 있는 경우에만 간격 적용 */
+.exhibition-content + .exhibition-header {
+  margin-top: 40px;
+}
+
+.exhibition-details {
+  min-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.detail-item.column {
+  flex-direction: column;
+  gap: 5px;
+}
+
+.detail-item.row {
+  flex-direction: row;
+  gap: 10px;
+}
+
+.detail-item.row .label {
+  min-width: 80px;
+}
+
+.detail-item .label {
+  font-weight: bold;
+  min-width: 40px;
+}
+
+.detail-item .value {
+  flex: 1;
+}
+
+/* 디버그용 숨김 요소 */
+.particle-text {
+  display: none;
+  white-space: pre-line;
+  font-family: inherit;
+}
+
+/* ===== 반응형 디자인 ===== */
+
+@media (max-width: 1700px) {
+  .panel-container {
+    width: 1550px;
+  }
+  /* 1400px 이하 - panel-container width: 1400px */
+  @media (max-width: 1549px) {
+    .panel-container {
+      width: 1400px;
+    }
+
+    .header-text {
+      position: absolute;
+      right: 50%;
+      transform: translateX(50%);
+      width: 100%;
+      font-size: 64px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+      z-index: 100;
+      letter-spacing: -2px;
+    }
+  }
+
+  /* 1150px 이하 - panel-container width: 1150px */
+  @media (max-width: 1399px) {
+    .panel-container {
+      width: 1150px;
+    }
+  }
+
+  /* 1000px 이하 - panel-container width: 1000px */
+  @media (max-width: 1149px) {
+    .panel-container {
+      width: 1000px;
+    }
+  }
+
+  /* 900px 이하 - panel-container width: 900px */
+  @media (max-width: 999px) {
+    .panel-container {
+      width: 900px;
+    }
+  }
+
+  /* 899px 이하 - 사용자가 직접 스타일링 */
+  @media (max-width: 899px) {
+    /* 빈칸 - 사용자가 직접 스타일링할 수 있음 */
+  }
+
+  @media (max-width: 799px) {
+    .header-text {
+      font-size: 48px;
+    }
+  }
+
+  @media (max-width: 699px) {
+    .header-text {
+      font-size: 32px;
+    }
+
+    .exhibition-header h1 {
+      font-size: 24px;
+    }
+
+    .exhibition-content p {
+      font-size: 14px;
+    }
+    
+  }
+
+  /* ===== 접근성 지원 ===== */
+  /* 모션 감소 선호 시 애니메이션 비활성화 */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
