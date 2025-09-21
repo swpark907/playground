@@ -20,9 +20,48 @@
 		</div>
 	</div>
 
-	<div id="app">
-		<h1 id="header" class="header-text">The Sound of Dimension</h1>
+	<!-- SVG 필터 정의 (글래스 디스토션용) -->
+	<svg style="position: absolute; width: 0; height: 0;" aria-hidden="true">
+		<defs>
+			<filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%">
+				<feTurbulence baseFrequency="0.02 0.15" numOctaves="10" result="noise" seed="1" />
+				<feDisplacementMap in="SourceGraphic" in2="noise" scale="0" result="displacement" />
+				<feGaussianBlur stdDeviation="0" result="blur" />
+				<feColorMatrix type="saturate" values="1" result="saturation" />
+				<feBlend in="SourceGraphic" in2="displacement" mode="normal" />
+			</filter>
+		</defs>
+	</svg>
 
+	<div id="app">
+		<h1 id="header" class="header-text">
+			<span class="char" data-char="T">T</span>
+			<span class="char" data-char="h">h</span>
+			<span class="char" data-char="e">e</span>
+			<span class="char" style="margin-left: 20px;" data-char="S">S</span>
+			<span class="char" data-char="o">o</span>
+			<span class="char" data-char="u">u</span>
+			<span class="char" data-char="n">n</span>
+			<span class="char" data-char="d">d</span>
+			<span class="char" style="margin-left: 20px;" data-char="o">o</span>
+			<span class="char" data-char="f">f</span>
+			<span class="char" style="margin-left: 20px;" data-char="D">D</span>
+			<span class="char" data-char="i">i</span>
+			<span class="char" data-char="m">m</span>
+			<span class="char" data-char="e">e</span>
+			<span class="char" data-char="n">n</span>
+			<span class="char" data-char="s">s</span>
+			<span class="char" data-char="i">i</span>
+			<span class="char" data-char="o">o</span>
+			<span class="char" data-char="n">n</span>
+		</h1>
+		<div class="count-down-container">
+			<div class="count-down-content">
+				<div class="count-down-text">
+					<span class="matrix-text">00:00:00</span>
+				</div>
+			</div>
+		</div>
 		<div class="panel-container">
 		<div id="leftPanel" aria-live="polite" aria-atomic="true" role="region">
 			<div id="leftPanelContent">
@@ -64,9 +103,7 @@
 			</div>
 		</div>
 
-		
-
-			<div id="rightPanel" aria-live="polite" aria-atomic="true" role="region">
+		<div id="rightPanel" aria-live="polite" aria-atomic="true" role="region">
 				<div id="rightPanelContent">
 					<div class="panel-view" id="view-area-2" hidden>
 						<div class="exhibition-header">
@@ -129,18 +166,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="dock-view" id="view-area-3" hidden>
-					<strong>세 번째 영역</strong>
-					<span>다른 컴포넌트나 버튼들을 배치할 수 있어요.</span>
-				</div>
-				<div class="dock-view" id="view-area-4" hidden>
-					<span>네 번째 영역 - 입력 데모:</span>
-					<input placeholder="여기에 텍스트를 입력" />
-				</div>
 			</div>
 		</div>
 	</div>
 	<script src="./script.js"></script>
 </body>
 </html>
-

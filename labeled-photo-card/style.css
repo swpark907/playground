@@ -217,6 +217,84 @@ body {
     0 0 7px rgba(255, 255, 255, 0.6),
     0 0 10px rgba(0, 255, 255, 0.4),
     0 0 12px rgba(255, 0, 255, 0.2);
+  cursor: pointer;
+}
+
+.char {
+  display: inline-block;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: center;
+  will-change: transform;
+  margin-left: -13px;
+}
+
+.header-text:hover .char {
+  animation: scatter-in 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.header-text:not(:hover) .char {
+  animation: scatter-out 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes scatter-in {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(
+      calc(var(--scatter-x, 30px) * var(--direction-x, 1) * 0.7),
+      calc(var(--scatter-y, -40px) * var(--direction-y, 1) * 0.7),
+      calc(var(--scatter-z, 20px) * 0.7)
+    ) rotate(calc(var(--rotation, 15deg) * var(--rotation-dir, 1) * 0.7));
+  }
+  100% {
+    transform: translate3d(
+      calc(var(--scatter-x, 30px) * var(--direction-x, 1)),
+      calc(var(--scatter-y, -40px) * var(--direction-y, 1)),
+      calc(var(--scatter-z, 20px))
+    ) rotate(calc(var(--rotation, 15deg) * var(--rotation-dir, 1)));
+  }
+}
+
+@keyframes scatter-out {
+  0% {
+    transform: translate3d(
+      calc(var(--scatter-x, 30px) * var(--direction-x, 1)),
+      calc(var(--scatter-y, -40px) * var(--direction-y, 1)),
+      calc(var(--scatter-z, 20px))
+    ) rotate(calc(var(--rotation, 15deg) * var(--rotation-dir, 1)));
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+
+.count-down-container {
+  position: absolute;
+  bottom: 13%;
+  right: 18%;
+  font-size: 36px;
+  z-index: 9999;
+}
+
+.count-down-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.count-down-text {
+  text-align: center;
+}
+
+.count-down-text .matrix-text {
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-shadow:
+    0 0 5px rgba(255, 255, 255, 0.8),
+    0 0 10px rgba(255, 255, 255, 0.6),
+    0 0 15px rgba(0, 255, 255, 0.4),
+    0 0 20px rgba(255, 0, 255, 0.2);
 }
 
 /* ===== 패널 스타일링 ===== */
@@ -239,11 +317,14 @@ body {
 #leftPanel {
   z-index: 30;
   text-align: left;
+  /* 글래스 디스토션 효과 기본값 */
+  --distortion-intensity: 0;
+  --blur-amount: 0;
+  --displacement-scale: 0;
+  filter: url(#glass-distortion);
+  transition: none; /* SVG 필터는 직접 조절하므로 transition 제거 */
 }
 
-#leftPanelContent {
-  /* 좌측 패널 특정 스타일 */
-}
 
 /* 우측 패널 - 컨텐츠 영역 중앙 정렬 */
 #rightPanel {
@@ -295,6 +376,8 @@ body {
   stroke: rgba(255, 255, 255, 0.9);
   stroke-width: 1.25;
   fill: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .label-text {
@@ -302,6 +385,18 @@ body {
   font-size: 14px;
   letter-spacing: 0.02em;
   user-select: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.label-group.active .label-line,
+.label-group.active .label-text {
+  opacity: 1;
+}
+
+.label-group:hover .label-line,
+.label-group:hover .label-text {
+  opacity: 1;
 }
 
 .label-hit {
@@ -538,6 +633,8 @@ body {
   font-family: inherit;
 }
 
+
+
 /* ===== 반응형 디자인 ===== */
 
 @media (max-width: 1700px) {
@@ -562,6 +659,20 @@ body {
       z-index: 100;
       letter-spacing: -2px;
     }
+
+    .count-down-container {
+      right: 50%;
+      transform: translateX(50%);
+      font-size: 32px;
+    }
+
+    .count-down-text .matrix-text {
+      font-size: 32px;
+    }
+
+    .char {
+      font-size: 32px;
+    }
   }
 
   /* 1150px 이하 - panel-container width: 1150px */
@@ -585,14 +696,19 @@ body {
     }
   }
 
-  /* 899px 이하 - 사용자가 직접 스타일링 */
-  @media (max-width: 899px) {
-    /* 빈칸 - 사용자가 직접 스타일링할 수 있음 */
-  }
+  /* 899px 이하 - 추가 스타일링 가능 */
 
   @media (max-width: 799px) {
     .header-text {
       font-size: 48px;
+    }
+
+    .count-down-container {
+      font-size: 24px;
+    }
+
+    .count-down-text .matrix-text {
+      font-size: 24px;
     }
   }
 
@@ -608,8 +724,22 @@ body {
     .exhibition-content p {
       font-size: 14px;
     }
-    
+
+    .count-down-container {
+      font-size: 18px;
+    }
+
+    .count-down-text .matrix-text {
+      font-size: 18px;
+    }
+
+    .char {
+      font-size: 18px;
+    }
+
   }
+
+ 
 
   /* ===== 접근성 지원 ===== */
   /* 모션 감소 선호 시 애니메이션 비활성화 */
