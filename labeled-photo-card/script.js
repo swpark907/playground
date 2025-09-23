@@ -695,6 +695,15 @@ const STATE = {
     const headerText = document.querySelector('.header-text');
     if (!headerText) return;
 
+    // 모바일 감지
+    const isMobile = window.innerWidth <= 699;
+
+    if (isMobile) {
+      // 모바일에서는 일반 텍스트로 변경하고 "of" 뒤에 줄바꿈 추가
+      headerText.innerHTML = 'The Sound of<br>Dimension';
+      return;
+    }
+
     const chars = headerText.querySelectorAll('.char');
     chars.forEach((char, index) => {
       // 각 글자별 랜덤 흩어짐 값 설정
@@ -811,6 +820,10 @@ const STATE = {
     // 텍스트 흩어짐 효과 초기화
     initializeTextScatter();
 
+    // 모바일에서는 글리치 효과 적용하지 않음
+    const isMobile = window.innerWidth <= 699;
+    if (isMobile) return;
+
     // 랜덤하게 글리치 효과 적용 (5-15초 간격)
     const glitchInterval = setInterval(() => {
       if (Math.random() < 0.3) { // 30% 확률로 글리치 적용
@@ -917,6 +930,13 @@ const STATE = {
       window.addEventListener("resize", () => {
         drawScene();
         updateSvgOverlay();
+
+        // 창 크기 변경 시 텍스트 효과 재초기화
+        if (STATE.headerGlitchInterval) {
+          clearInterval(STATE.headerGlitchInterval);
+          STATE.headerGlitchInterval = null;
+        }
+        applyHeaderGlitch();
       });
 
       // 캔버스 및 SVG 초기화

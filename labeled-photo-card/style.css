@@ -712,10 +712,10 @@ body {
 
   @media (max-width: 699px) {
     .header-text {
-      font-size: 52px;
+      font-size: 48px;
       letter-spacing: 2.5px;
-      line-height: 1;
-      top: 10%;
+      line-height: 1.2;
+      top: 0%;
       bottom: unset;
 
       .char {
@@ -735,11 +735,16 @@ body {
       #leftPanel {
         position: relative;
         left: 10px;
+
+        .panel-view {
+          font-size: 10px;
+          gap: 10px;
+        }
       }
 
       #rightPanel {
         position: relative;
-        top: 135px;
+        top: 65px;
         right: 10px;
 
         .panel-view {
@@ -756,9 +761,6 @@ body {
       display: none;
     }
 
-    .exhibition-content {
-    }
-
     .exhibition-details {
       width: 100%;
       display: flex;
@@ -773,16 +775,16 @@ body {
       justify-content: flex-start;
     }
 
+    .detail-item {
+      font-size: 13px;
+    }
+
     .exhibition-content p {
       font-size: 14px;
     }
 
-    .count-down-container {
-      font-size: 18px;
-    }
-
     .count-down-text .matrix-text {
-      font-size: 18px;
+      font-size: 16px;
     }
 
     .char {
@@ -792,13 +794,6 @@ body {
     .panel-container {
       flex-direction: column;
       padding: 200px 0;
-    }
-
-    #leftPanel {
-    }
-
-    #leftPanel .exhibition-details .detail-item {
-      font-size: 14px;
     }
 
     #labelOverlay {
