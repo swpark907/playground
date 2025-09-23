@@ -887,7 +887,7 @@ const STATE = {
       const displayMinutes = String(minutes).padStart(2, '0');
       const displaySeconds = String(seconds).padStart(2, '0');
 
-      countdownElement.textContent = `${displayHours}:${displayMinutes}:${displaySeconds}`;
+      countdownElement.textContent = `${displayHours}h ${displayMinutes}m ${displaySeconds}s`;
     }
 
     // 즉시 업데이트
